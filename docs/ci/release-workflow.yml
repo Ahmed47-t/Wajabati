@@ -1,0 +1,53 @@
+name: release-apk
+
+# Builds the release variant with the debug key (same as local builds) and attaches it to a
+# GitHub release. Trigger by pushing a tag like v0.13.2, or run it manually.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Unit tests and lint
+        run: ./gradlew --no-daemon :app:testReleaseUnitTest :app:lintRelease
+
+      - name: Assemble
+        run: ./gradlew --no-daemon :app:assembleRelease
+
+      - name: Name and checksum
+        run: |
+          VERSION="$(sed -n "s/.*versionName '\([^']*\)'.*/\1/p" app/build.gradle)"
+          cp app/build/outputs/apk/release/app-release.apk "Wajabati-${VERSION}.apk"
+          sha256sum "Wajabati-${VERSION}.apk" | tee sha256.txt
+          echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Wajabati-${{ env.VERSION }}
+          path: |
+            Wajabati-*.apk
+            sha256.txt
+
+      - name: Attach to release
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1 \
+            || gh release create "${GITHUB_REF_NAME}" --title "Wajabati ${VERSION}" --prerelease --generate-notes
+          gh release upload "${GITHUB_REF_NAME}" Wajabati-*.apk sha256.txt --clobber

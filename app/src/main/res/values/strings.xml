@@ -8,8 +8,8 @@
  <string name="screen_1">"جارٍ التنفيذ"</string>
  <string name="screen_2">"الرئيسية"</string>
  <string name="screen_4">"الإعدادات"</string>
- <string name="screen_5">"وجباتي"</string>
- <string name="screen_6">"حجز الوجبات الجامعية"</string>
+ <string name="screen_5">"Wajabati"</string>
+ <string name="screen_6">"حجز الوجبات الجامعية · 0.13.1"</string>
  <string name="screen_9">"• يحجز وجباتك الجامعية الناقصة في Webetu للأيام الثلاثة القادمة.\n• لا يُرسل أي حجز قبل أن تراجع الخطة وتوافق عليها.\n• بياناتك تبقى مشفّرة على هاتفك وتُرسل إلى خدمتي MESRS وONOU فقط."</string>
  <string name="screen_10">"بدء الإعداد"</string>
  <string name="auto_booking">"الحجز التلقائي"</string>
@@ -140,9 +140,9 @@
  <string name="edit_appearance_3">"داكن"</string>
  <string name="open_social_1">"تعذّر فتح الرابط. تأكّد من وجود متصفح."</string>
  <string name="privacy_1">"بيانات الحساب مشفّرة ومحفوظة على هاتفك. الاتصال بخدمتي MESRS وONOU فقط، دون خادم وسيط. روابط التواصل لا تُفتح إلا عند الضغط عليها وتخضع لسياسة الموقع الخارجي.\n\nاستخدم الأتمتة إذا سمحت شروط الخدمة، وأوقفها عند الغياب. قد يحدث فحص إضافي عند تغير اليوم أو بعد فشل، وقد يؤخر أندرويد التنفيذ. راجع الحجوزات في Webetu."</string>
- <string name="about_1">"تطبيق لمتابعة وحجز الوجبات الجامعية عبر Webetu، مع اختيار مطعم لكل وجبة والتحقق التلقائي."</string>
- <string name="about_2">"تطبيق مستقل غير تابع للوزارة. التوافق مع كل الجامعات لم يُختبر ميدانيًا."</string>
- <string name="about_3">"وجباتي · 0.12.0"</string>
+ <string name="about_1">"عميل أندرويد لقراءة وحجز الوجبات الجامعية عبر Webetu: مطعم لكل وجبة، ومعاينة قبل الإرسال، وتحقق بعد الحجز."</string>
+ <string name="about_2">"مشروع مستقل، غير تابع للوزارة ولا للديوان الوطني للخدمات الجامعية. التوافق مع الجامعات الأخرى لم يُختبر."</string>
+ <string name="about_3">"Wajabati 0.13.1"</string>
  <string name="pending_1">"لا توجد محاولات معلّقة."</string>
  <string name="pending_2">"\nتحقّق في Webetu قبل إزالة القفل. في محاولة استبدال قد يكون القديم أُلغي دون تأكيد الجديد. الإزالة لا تسترجع الحجز ولا تضمن البديل، وقد تسمح بتكرار طلب قائم. لا تستخدمها أثناء عطل الخدمة."</string>
  <string name="pending_3">"تحقّقت — إزالة القفل"</string>
@@ -205,7 +205,7 @@
  <string name="hero_title_bat">"تبقّى إعداد البطارية"</string>
  <string name="hero_next_bat">"التالي: إعداد البطارية"</string>
  <string name="step4_title">"السماح بالعمل في الخلفية (البطارية)"</string>
- <string name="step4_desc">"استثنِ «وجباتي» من توفير البطارية حتى لا يؤخّر النظام التحقق."</string>
+ <string name="step4_desc">"استثنِ «Wajabati» من توفير البطارية حتى لا يؤخّر النظام التحقق."</string>
  <string name="battery_how">"افتح «البطارية» في صفحة التطبيق ثم اختر «غير مقيّد»."</string>
  <string name="enabled_now">"فُعّل الحجز التلقائي. التحقق %1$s. لا يعمل والهاتف مغلق أو بلا إنترنت؛ أوقفه عند الغياب."</string>
  <string-array name="meal_labels"><item>"فطور الصباح"</item><item>"الغداء"</item><item>"العشاء"</item></string-array>

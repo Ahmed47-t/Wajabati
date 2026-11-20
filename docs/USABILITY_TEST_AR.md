@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="assets/logo-lockup.png" width="280" alt="وجباتي">
+<img src="assets/logo-lockup.png" width="280" alt="Wajabati">
 
-# بروتوكول اختبار الاستخدام
+# بروتوكول اختبار الاستخدام — Wajabati
 
 **جاهز للتنفيذ · لم يُجرَ بعد**
 
