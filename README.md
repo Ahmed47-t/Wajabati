@@ -243,25 +243,29 @@ mkdir -p shots && MEALGUARD_SHOTS=$PWD/shots ./gradlew :app:testReleaseUnitTest 
 
 ## الملفات المرفقة
 
-| الإصدار | الملف | ملاحظة |
+| الإصدار | الملف | مطابقة الشيفرة |
 |---|---|---|
-| `v0.13.1` | `MealGuard-0.13.1-weekly-positive-exceptions.apk` | كان مرفوعًا على صفحة الإصدارات قبل هذا التغيير، ثم أصبح رابط تنزيله غير متاح (404). غير مطابق للشيفرة الحالية: اسم التطبيق فيه `وجباتي`، ولا يحوي الشعار ولا تعديلات هذه المراجعة. بصمته كما وردت عند نشره: `a11c8d32a5b9f1fca768f8d181bd0f063037bc95643b4a6445e4f6dd02bfea44` |
+| `v0.13.1` | `MealGuard-0.13.1-weekly-positive-exceptions.apk` (2.0 MB) | **لا.** بُني قبل هذه المراجعة: اسم التطبيق فيه `وجباتي`، وبلا شعار الـREADME الجديد. بصمته عند النشر: `a11c8d32a5b9f1fca768f8d181bd0f063037bc95643b4a6445e4f6dd02bfea44` |
 
-**لم يُنتَج ملف APK جديد في هذه المراجعة**، لأن بناء أندرويد يحتاج JDK 17 وAndroid SDK 35 ولا يتوفّر أيٌّ منهما في بيئة العمل هنا. لتوليد الملف من الشيفرة الحالية:
+**لم يُنتَج ملف APK جديد في هذه المراجعة.** بناء أندرويد يحتاج JDK 17 وAndroid SDK 35، وهما غير متوفّرين في بيئة العمل التي أُجريت فيها التعديلات، فالملف المنشور أعلاه لا يحتوي تغييرات الاسم والشعار.
+
+لتوليد ملف مطابق للشيفرة الحالية على جهازك:
+
+```sh
+./tools/release.sh            # فحص تناسق الإصدار + tests + lint + assemble + بصمة SHA-256
+./tools/release.sh --publish  # نفس ما سبق + إنشاء إصدار GitHub ورفع Wajabati-0.13.1.apk
+```
+
+أو يدويًا:
 
 ```sh
 ./gradlew --no-daemon :app:assembleRelease
-# app/build/outputs/apk/release/app-release.apk (موقّع بمفتاح debug المحلي)
+sha256sum app/build/outputs/apk/release/app-release.apk
+gh release upload v0.13.1 app/build/outputs/apk/release/app-release.apk
 ```
 
-أو استخدم السكربت الجاهز (يتحقّق من تناسق رقم الإصدار في الموارد و`ServiceApi`، ثم يبني ويحسب البصمة):
-
-```sh
-./tools/release.sh            # بناء وفحص فقط
-./tools/release.sh --publish  # + إنشاء إصدار GitHub ورفع الملف
-```
-
-يوجد أيضًا سير عمل جاهز في `docs/ci/release-workflow.yml`؛ انسخه إلى `.github/workflows/release.yml` إن كانت Actions مفعّلة في المستودع، فيبني الـAPK عند دفع وسم `v*` ويرفقه بالإصدار.
+> [!IMPORTANT]
+> الملف يُوقَّع بمفتاح debug المحلي (كما في `app/build.gradle`). مفتاح جهاز آخر مختلف، لذا لا يمكن تثبيت النسخة الجديدة فوق نسخة سابقة موقّعة بمفتاح آخر: يجب إزالة التثبيت القديم أولًا.
 
 ---
 
