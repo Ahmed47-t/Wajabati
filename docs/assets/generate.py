@@ -106,19 +106,19 @@ def banner(w=1600, h=560):
     d.ellipse([cx - m * 0.88, cy - m * 0.88, cx + m * 0.88, cy + m * 0.88], outline=(255, 255, 255, 26), width=2)
 
     right = w - 84
-    draw(d, (right, 92), "عميل أندرويد لحجز الوجبات الجامعية · 0.13.1",
+    draw(d, (right, 92), "تطبيق أندرويد لحجز الوجبات الجامعية · 0.13.1",
          FontSet(AR_SB, LAT_R, 27), (186, 216, 255), anchor="rm")
     f_word = ImageFont.truetype(f"{FONTS}/Inter-800.ttf", 124)
     d.text((right - d.textlength("Wajabati", font=f_word), 156), "Wajabati", font=f_word, fill=WHITE)
-    draw(d, (right, 344), "قراءة ثم معاينة ثم موافقة قبل أي حجز",
+    draw(d, (right, 344), "تعاين خطتك وتوافق قبل إرسال أي حجز",
          FontSet(AR_SB, LAT_R, 42), WHITE, anchor="rm")
-    draw(d, (right, 398), "تشفير محلي · بلا خادم وسيط · إيقاف في أي وقت",
+    draw(d, (right, 398), "تشفير محلي · اتصال مباشر بـ Webetu · إيقاف في أي وقت",
          FontSet(AR_R, LAT_R, 29), (198, 222, 255), anchor="rm")
 
     f_chip = FontSet(AR_SB, LAT_R, 24)
     x = right
     for text, fg, bg in [("الإصدار 0.13.1", (7, 52, 122), (255, 255, 255, 245)),
-                         ("226 اختبارًا ناجحًا", WHITE, (255, 255, 255, 40)),
+                         ("Java 17", WHITE, (255, 255, 255, 40)),
                          ("Android 8 فما فوق", WHITE, (255, 255, 255, 40)),
                          ("عربي · فرنسي", WHITE, (255, 255, 255, 40))]:
         x -= pill(img, (x, 462), text, f_chip, fg, bg) + 14
@@ -137,10 +137,10 @@ def social(w=1280, h=640):
     f_word = ImageFont.truetype(f"{FONTS}/Inter-800.ttf", 104)
     wtw = d.textlength("Wajabati", font=f_word)
     d.text((w / 2 - wtw / 2, 344), "Wajabati", font=f_word, fill=WHITE)
-    draw(d, (w / 2, 486), "حجز الوجبات الجامعية · قراءة ثم موافقة قبل أي كتابة",
+    draw(d, (w / 2, 486), "حجز الوجبات الجامعية · معاينة ثم موافقة قبل أي حجز",
          FontSet(AR_SB, LAT_R, 32), (212, 231, 255), anchor="cm")
     f = ImageFont.truetype(f"{FONTS}/Inter-600.ttf", 20)
-    d.text((w / 2, 566), "A N D R O I D    ·    J A V A    ·    v 0 . 1 3 . 1    ·    2 2 6   T E S T S",
+    d.text((w / 2, 566), "A N D R O I D    ·    J A V A    ·    v 0 . 1 3 . 1    ·    W E B E T U",
            font=f, fill=(255, 255, 255, 165), anchor="mm")
     img.convert("RGB").save(f"{OUT}/social-preview.png", quality=95, optimize=True)
 
@@ -151,7 +151,7 @@ def lockup(hgt=300, dark=False):
     fs_title = FontSet(AR_B, LAT_B, int(hgt * 0.335))
     f1 = ImageFont.truetype(f"{FONTS}/Inter-600.ttf", int(hgt * 0.085))
     f2 = ImageFont.truetype(f"{FONTS}/Inter-500.ttf", int(hgt * 0.056))
-    lab1, lab2 = "W A J A B A T I   ·   V 0 . 1 3 . 1", "M E A L   R E S E R V A T I O N   C L I E N T"
+    lab1, lab2 = "W A J A B A T I   ·   V 0 . 1 3 . 1", "U N I V E R S I T Y   M E A L   B O O K I N G"
     ink = WHITE if dark else INK
     sub = (198, 222, 255) if dark else MUTED
 
@@ -206,21 +206,21 @@ def architecture(w=1500, h=790):
                    (p_right[0] - s * math.cos(ang + 0.5), p_right[1] - s * math.sin(ang + 0.5))], fill=color)
 
     draw(d, (w - 62, 56), "كيف يعمل التطبيق", FontSet(AR_B, LAT_B, 38), INK, anchor="rm")
-    draw(d, (w - 62, 110), "مسار واحد: قراءة  ‹  معاينة  ‹  موافقة  ›  كتابة  ›  تحقّق نهائي",
+    draw(d, (w - 62, 110), "قراءة  ‹  معاينة  ‹  موافقة  ‹  حجز الناقص  ‹  تأكيد",
          FontSet(AR_R, LAT_R, 23), MUTED, anchor="rm")
 
     xs = [1226, 930, 634, 338]
     y1, y2 = 178, 396
-    card(xs[0], y1, "الواجهة", "شاشات عربية RTL", mono="MainActivity")
-    card(xs[1], y1, "المشغّل", "قفل كتابة واحد", accent=(58, 132, 214), mono="Runner")
-    card(xs[2], y1, "المحرّك", "خطة ثلاثة أيام", accent=(40, 152, 96), mono="Engine")
-    card(xs[3], y1, "الاستبدال", "إلغاء بموافقة صريحة", accent=(192, 128, 20), mono="Replacement")
+    card(xs[0], y1, "الواجهة", "شاشات عربية وفرنسية", mono="MainActivity")
+    card(xs[1], y1, "المنسّق", "منع تداخل العمليات", accent=(58, 132, 214), mono="Runner")
+    card(xs[2], y1, "خطة الحجز", "3 أيام ومنع التكرار", accent=(40, 152, 96), mono="Engine")
+    card(xs[3], y1, "الاستبدال", "تبديل يدوي بموافقة", accent=(192, 128, 20), mono="Replacement")
     for i in range(3):
         bi((xs[i] - cw - 6, y1 + ch / 2), (xs[i + 1] + 6, y1 + ch / 2))
 
-    card(xs[2], y2, "بروتوكول الخدمة", "HTTPS مثبّت، بلا إعادة إرسال", accent=(92, 100, 196), mono="ServiceApi")
-    card(xs[1], y2, "الخدمة الرسمية", "Webetu · MESRS / ONOU", accent=(124, 136, 154), mono="Webetu")
-    card(xs[0], y2, "الجدولة", "عمل دوري في الخلفية", accent=(40, 152, 96), mono="Automation")
+    card(xs[2], y2, "الشبكة", "اتصال HTTPS مباشر", accent=(92, 100, 196), mono="ServiceApi")
+    card(xs[1], y2, "منصة Webetu", "MESRS / ONOU", accent=(124, 136, 154), mono="Webetu")
+    card(xs[0], y2, "الجدولة", "فحص دوري في الخلفية", accent=(40, 152, 96), mono="Automation")
     arrow((xs[2] - cw / 2, y1 + ch + 8), (xs[2] - cw / 2, y2 - 10))
     bi((xs[2] + 6, y2 + ch / 2), (xs[1] - cw - 6, y2 + ch / 2))
     bi((xs[1] + 6, y2 + ch / 2), (xs[0] - cw - 6, y2 + ch / 2))
@@ -229,7 +229,7 @@ def architecture(w=1500, h=790):
     d.rounded_rectangle([xs[3] - cw, vy, w - 62, vy + 100], radius=18, fill=(233, 241, 255), outline=(206, 223, 250), width=2)
     draw(d, (w - 90, vy + 34), "Vault · Android Keystore + AES-GCM",
          FontSet(AR_SB, LAT_B, 25), (26, 60, 128), anchor="rm")
-    draw(d, (w - 90, vy + 70), "كلمة المرور مشفّرة على الجهاز فقط: لا سجلات، لا تحليلات، لا نسخ احتياطي.",
+    draw(d, (w - 90, vy + 70), "كلمة المرور مشفّرة على الهاتف فقط · بدون سيرفر وسيط أو تتبع أو نسخ سحابي",
          FontSet(AR_R, LAT_R, 19), (72, 100, 148), anchor="rm")
     for x in (xs[2] - cw / 2, xs[1] - cw / 2, xs[0] - cw / 2):
         arrow((x, vy - 8), (x, y2 + ch + 10), color=(150, 176, 226))
@@ -241,15 +241,15 @@ def architecture(w=1500, h=790):
 def journey(w=1600, h=430):
     img = Image.new("RGB", (w, h), (252, 253, 255))
     d = ImageDraw.Draw(img)
-    draw(d, (w - 64, 56), "أربع خطوات، وأربع ضمانات", FontSet(AR_B, LAT_B, 40), INK, anchor="rm")
-    draw(d, (w - 64, 112), "كل خطوة تُفتح فقط بعد أن تكتمل التي قبلها",
+    draw(d, (w - 64, 56), "خطوات الإعداد الأربع", FontSet(AR_B, LAT_B, 40), INK, anchor="rm")
+    draw(d, (w - 64, 112), "كل خطوة تفتح بعد إكمال الخطوة التي قبلها",
          FontSet(AR_R, LAT_R, 23), MUTED, anchor="rm")
 
     steps = [
-        ("1", "الحساب", "دخول وقراءة فقط", "لا حجز في هذه الخطوة", BLUE),
-        ("2", "الوجبات", "مطعم لكل وجبة + استثناءات", "كل الوجبات اختيارية", BLUE),
-        ("3", "المراجعة", "خطة الأيام الثلاثة", "أنت توافق قبل الكتابة", BLUE),
-        ("4", "البطارية", "استثناء من تحسين البطارية", "اختياري لكن مستحسن", (40, 152, 96)),
+        ("1", "الحساب", "تسجيل الدخول والقراءة فقط", "لا يتم أي حجز هنا", BLUE),
+        ("2", "الوجبات", "اختيار مطعم لكل وجبة", "مع استثناءات أيام الأسبوع", BLUE),
+        ("3", "المراجعة", "عرض خطة 3 أيام قادمة", "لا حجز قبل موافقتك", BLUE),
+        ("4", "البطارية", "السماح بالعمل في الخلفية", "اختياري لكن مستحسن", (40, 152, 96)),
     ]
     margin, gap = 64, 26
     cardw = (w - 2 * margin - gap * 3) / 4

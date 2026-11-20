@@ -26,8 +26,33 @@ def _shape(tok):
     return get_display(arabic_reshaper.reshape(tok))
 
 
+LAT = re.compile(r'[A-Za-z0-9]')
+
+
 def _tokens(text):
-    return text.split(' ')
+    raw = text.split(' ')
+    out, ltr = [], []
+    for i, tok in enumerate(raw):
+        if AR.search(tok):
+            if ltr:
+                out.extend(reversed(ltr))
+                ltr.clear()
+            out.append(tok)
+        elif LAT.search(tok):
+            ltr.append(tok)
+        else:
+            # Keep neutral separators (e.g. '·', '+', '/') inside an active LTR run only if another LTR word follows.
+            next_is_ltr = any(LAT.search(t) for t in raw[i + 1:i + 2]) and not AR.search(raw[i + 1]) if i + 1 < len(raw) else False
+            if ltr and next_is_ltr:
+                ltr.append(tok)
+            else:
+                if ltr:
+                    out.extend(reversed(ltr))
+                    ltr.clear()
+                out.append(tok)
+    if ltr:
+        out.extend(reversed(ltr))
+    return out
 
 
 def measure(text, fs):
