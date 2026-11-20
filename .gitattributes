@@ -1,0 +1,21 @@
+# Normalise line endings so the Gradle wrapper and Java sources stay stable across platforms.
+* text=auto eol=lf
+
+# Binaries: never diff, never normalise
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.apk binary
+*.jar binary
+*.ttf binary
+*.woff2 binary
+
+# Keep the language bar honest: artwork and prose are documentation, not source.
+docs/assets/** linguist-documentation
+docs/*.md linguist-documentation
+README.md linguist-documentation
+
+# Gradle wrapper is generated
+gradlew linguist-vendored
+gradlew.bat linguist-vendored
+gradle/wrapper/** linguist-vendored

@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources><color name="ic_launcher_background">#0066DD</color></resources>
+<!-- Brand palette. ic_launcher_background is the plate blue (#0066DD) used by the adaptive icon;
+     the app UI keeps its system-light/dark surfaces in Appearance.Palette. -->
+<resources>
+ <color name="ic_launcher_background">#0066DD</color>
+ <color name="brand_blue">#0066DD</color>
+ <color name="brand_deep">#002D73</color>
+</resources>

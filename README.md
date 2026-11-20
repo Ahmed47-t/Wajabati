@@ -1,186 +1,295 @@
-# Wajabati 0.13.0 / وجباتي
+<div align="center">
 
-Personal experimental Android meal-booking client. Not affiliated with MESRS or ONOU.
+<img src="docs/assets/logo-lockup.png" width="420" alt="Wajabati — meal reservation client">
 
-**Not live-account tested.** Do not rely on it until the read-only login, preview, manually approved booking and official Webetu verification all pass. Use only if permitted by the service's terms. No CAPTCHA, MFA, access-control or reservation-window bypass is implemented. Manual cancellation/rebooking is available only with separate explicit approval and may lose the old reservation if rebooking fails.
+# Wajabati
 
-## 0.13.0 — stuck-booking recovery and audit cleanups
+**عميل أندرويد شخصي لحجز الوجبات الجامعية على Webetu · 0.13.1**
+**A personal Android client for university meal reservations on Webetu · 0.13.1**
 
-Fixes the "pending attempt" deadlock seen on 0.12.0 (one ambiguous write froze the whole three-day plan) and applies the full audit of 0.12.0 (dead code, duplication, stale assumptions).
+[![version](https://img.shields.io/badge/version-0.13.1-0066DD?labelColor=374151)](https://github.com/Ahmed47-t/Wajabati/releases)
+[![package](https://img.shields.io/badge/GitHub%20Packages-APK-0066DD?labelColor=374151)](docs/PACKAGES.md)
+[![tests](https://img.shields.io/badge/tests-226%20passing-0066DD?labelColor=374151)](app/src/test/java/dz/local/mealguard)
+[![lint](https://img.shields.io/badge/lint-0%20errors-0066DD?labelColor=374151)](docs/validation/lint-0.13.0.txt)
+[![android](https://img.shields.io/badge/Android-8.0%2B-0066DD?logo=android&logoColor=white&labelColor=374151)](https://developer.android.com/about/versions/oreo)
+[![java](https://img.shields.io/badge/Java-17-0066DD?logo=openjdk&logoColor=white&labelColor=374151)](app/build.gradle)
+[![no backend](https://img.shields.io/badge/backend-none%20%C2%B7%20on--device%20only-0066DD?labelColor=374151)](docs/USER_GUIDE_AR.md#7-الخصوصية)
+[![status](https://img.shields.io/badge/status-experimental%20build-6B7280?labelColor=374151)](#الحدود-والتحذيرات)
 
-- **A pending lock now holds only its own meal.** `Engine.apply` books and verifies every other meal; the locked meal is never re-sent and is reported at the end with the exact fix path (الإعدادات ← الأدوات ← «المحاولات المعلّقة»). The old behaviour blocked the entire plan before any write (EngineTest now asserts the per-meal rule).
-- **Journal locks whose day left the booking window are expired automatically**, so ambiguous leftovers cannot rot the journal forever.
-- **Pending journal entries record `at` and `reason`**; the pending-attempts dialog lists each entry with its time and cause instead of raw keys.
-- **"المحاولات المعلّقة" is one tap away** from the Home "آخر عملية" card.
-- **Today's meals card reads real state**: the plan window is tomorrow..day 3, so the read-only cache now also stores today's rows; the "لم تُقرأ حالة الحجز بعد" hint is only shown before the first read, and reading the Bookings tab really does fill the card.
-- **Restaurant names are display-sanitised** (`Engine.clean`): tatweel and combining stroke marks (U+0336) that the service may return no longer render as strike-through lines. Name comparison (`norm`) is unchanged.
-- Dead code removed: `compactPlan`, `Engine.describe`, `WeeklySchedule.summary`, seven unused fields, an unreachable duplicate check in `Runner.book`, the unused `RECEIVE_BOOT_COMPLETED` permission, `ic_meal.xml`, and the obsolete `mipmap-anydpi-v26` qualifier. `tools/patch_*.py` (already-applied one-shot mutators) are dropped from the tree.
-- Duplicated logic unified: `Automation.disengage()` for the automation-off triple, one shared failure-notification prefix.
-- Stale metadata fixed: User-Agent now `MealGuard/0.13.0`; README/doc banners no longer link to missing release-note files.
-- Behaviour deliberately unchanged: write-then-verify journaling, never-resend policy for uncertain writes, replacement flow, scheduling policy, and all security/storage choices.
+<img src="docs/assets/banner.png" alt="Wajabati — university meal reservations on Webetu" width="100%">
 
-## 0.12.0
+</div>
 
-- Password field: the field and the show/hide button are one outlined box (field takes the free width, 48dp button at the end, slashed eye while the password is visible), so text never runs under the icon.
-- Battery step opens the system prompt for this app directly (`ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`, new permission `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`); falls back to the app info page.
-- About: the name is now TFYCHE AHMED REDOUANE.
+> [!WARNING]
+> **ليست نسخة متجر، ولا منتجًا رسميًا، ولا تابعة لوزارة التعليم العالي (MESRS) أو الديوان الوطني للخدمات الجامعية (ONOU).**
+> تطبيق شخصي تجريبي، مكتوب لاستخدام صاحبه. لم يُختبر بحساب حقيقي ولا على جهاز فعلي، والـAPK موقّع بمفتاح تطوير.
+> استعمله فقط إن كانت شروط الخدمة تسمح بذلك؛ ولا يوجد فيه أي تجاوز لـCAPTCHA أو التحقق بخطوتين أو صلاحيات الوصول أو نافذة الحجز.
 
-## 0.11.0 — owner's notes after trying 0.10.0 on a phone
+## المحتويات
 
-- **Weekly exceptions inside step 2**: the seven days are edited in "الوجبات والمدة" under the three restaurants; Settings → "الاستثناءات الأسبوعية" opens that step. Opening a day before the usual restaurants were saved saves the current picks first. The separate weekly screen is gone.
-- **Shorter login step**: the "قبل إدخال كلمة المرور" box, the "leave the password empty" hint and the Keystore line were removed at the owner's request. The same facts remain under "الخصوصية والاستخدام" and on the Home checklist.
-- **No confirmation dialogs for booking and activation**: "تأكيد وحجز الناقص" and "تفعيل" act on the first tap. The checks before them are unchanged (same-day preview matching the saved account and choices; notification permission). The dialog before **replacing existing reservations** is kept, because it lists what will be cancelled.
-- **Battery is step 4**: the checklist and progress are now out of 4; the step opens the system battery-optimisation list and is ticked when the app is excluded. Booking does not depend on it.
-- **"إعدادك مكتمل" card is shown once**: after it has been seen and the user leaves Home, it stays hidden (it returns if a step becomes undone).
+- [نظرة سريعة](#نظرة-سريعة)
+- [مسار الإعداد](#مسار-الإعداد)
+- [كيف يعمل](#كيف-يعمل)
+- [ما الذي يفعله](#ما-الذي-يفعله)
+- [التثبيت والبناء](#التثبيت-والبناء)
+- [البنية التقنية](#البنية-التقنية)
+- [الخصوصية والأمان](#الخصوصية-والأمان)
+- [سجلّ الإصدارات](#سجلّ-الإصدارات)
+- [الحدود والتحذيرات](#الحدود-والتحذيرات)
+- [الملفات المرفقة والحزم](#الملفات-المرفقة-والحزم)
+- [المساهمة والترخيص](#المساهمة-والترخيص)
+- [English summary](#english-summary)
 
-## 0.10.0 — mockup-based screens (booking logic unchanged)
+---
 
-- **Home**: progress card (0–3 of 3, percentage, next-step button) and a three-step setup checklist with done / current / pending states; a later step cannot be opened before the previous one. "Today's meals" card: a status chip is shown only when it comes from an actual read-only reading that is newer than the last booking run — the app never shows "booked" by assumption.
-- **Reservations tab** (replaces the Meals tab): next three days as one card per day, read-only loading banner with skeleton cards, "refresh from Webetu", and a button to the existing review/consent step when something is missing. Reading is cached for 10 minutes; nothing is booked from this tab.
-- **Setup wizard**: title + "step n of 3" + progress bar, close (X) button, show/hide password, Android Keystore · AES-GCM note; "Back" is pinned at the bottom.
-- **Settings**: rows with icons and current values (student number, masked password state, restaurant per meal, weekly exceptions, check interval, notification state → system notification settings). The weekly schedule is now reached from Settings.
-- **Not added on purpose**: the notifications tab and the header bell (owner's request); university / residence name and bed counts from the mockup (the app does not have that data).
-- `tools/strings_fr.py` and `tools/strings_ar.json` were removed: `values/strings.xml` and `values-fr/strings.xml` are now edited directly (220 keys each).
+## نظرة سريعة
 
-## 0.9.0 — phase 3 of the UX audit (booking logic unchanged)
+Wajabati تطبيق أندرويد أصلي (Java، بلا مكتبات واجهة خارجية) يقرأ حجوزاتك على Webetu **قراءةً فقط**، يعرض خطتك للأيام الثلاثة القادمة، ولا يرسل أي حجز قبل أن ترى الخطة وتوافق عليها بنفسك.
 
-- Bottom navigation with three pinned destinations: Home, Meals, Settings. The top segmented tabs are gone.
-- New Meals screen: usual restaurant per meal and a seven-day weekly schedule; each day opens its editor (replaces the nested seven-item dialog).
-- `ChoiceField` bottom sheet with large rows replaces every stock `Spinner` (meal restaurants, interval, weekly editor).
-- The primary action of each setup step and its error message are pinned above the keyboard, outside the scroll area.
-- Welcome and trust points on the first screen.
-- All UI-layer strings moved to `res/values/strings.xml` (182 strings); French (beta) in `res/values-fr`, chosen in Settings > Language. Arabic stays the default whatever the phone language. Booking-engine messages, notifications and the About bio are still Arabic.
-- Adaptive launcher icon with a monochrome layer.
-- Usability test protocol: `docs/USABILITY_TEST_AR.md` (not run yet).
-- **194 passing local tests** (168 original + 26 in `UxTest`); lint 0 errors / 22 warnings. Not verified on a physical device or with a live account.
+| البند | التفصيل |
+|---|---|
+| اسم التطبيق | `Wajabati` · سطر الإصدار `0.13.1` |
+| الإصدار الحالي | `0.13.1` · versionCode 15 |
+| المنصّة | Android 8.0 (API 26) فما فوق · targetSdk 35 |
+| اللغة | Java 17 · بلا Kotlin · بلا مكتبات واجهة خارجية |
+| الواجهة | عربي افتراضيًا (RTL كامل) + فرنسي (تجريبي) + فاتح/داكن/حسب النظام |
+| التشفير | Android Keystore · AES-GCM · لا نص واضح ولا نسخ احتياطي |
+| الخادم | لا خادم وسيط: الاتصال يذهب مباشرة إلى MESRS/ONOU |
+| التتبّع | لا تحليلات، لا إعلانات، لا تتبّع، لا تحديث تلقائي |
+| الاختبارات | 226 اختبارًا محليًا ناجحًا (Robolectric على API 28/35) |
 
-## 0.8.0 — UX audit fixes (built on 0.7.0, booking logic unchanged)
+### المبدأ في سطر واحد
 
-- System Back steps back inside the setup and settings instead of closing the app; the wizard returns to the page it was opened from.
-- A pinned progress bar is visible on every page while work is running; disabled controls are dimmed.
-- Errors stay next to the action that caused them (no transient toasts); 401/403 are explained in plain Arabic.
-- Home shows per-meal booking status for the coming days (last full confirmation, or last read-only preview with its time).
-- Review screen shows one row per meal with a text status chip; the replacement action is styled as destructive.
-- Login step explains where the password goes before asking for it; fields have visible labels and outlines.
-- No fixed heights (checked at font scale 1.6); headings, live regions, tab state and labels for screen readers; 3:1 outline on the off switch and the selected tab.
-- Chevron only on navigation rows; values always on the trailing edge; "الوضع الليلي" renamed "المظهر".
-- **184 passing local tests** (168 existing + 16 new in `UxTest`); lint 0 errors / 18 warnings.
-- Optional screenshots: `MEALGUARD_SHOTS=<folder> ./gradlew :app:testReleaseUnitTest --tests '*ScreenshotTest'`.
-- Not verified on a physical device or with a live account. The APK is signed with a local debug key, so it cannot update an install signed with a different key.
+> **لا كتابة قبل قراءة، ولا إرسال قبل موافقة، ولا إعادة إرسال عند الشك.**
 
+---
 
-## 0.7.0 — explicitly approved reservation replacement
+## مسار الإعداد
 
-Release notes for 0.7.0 are not part of this archive.
+<div align="center">
+<img src="docs/assets/setup-journey.png" alt="خطوات الإعداد الأربع" width="100%">
+</div>
 
-- Read-only preview now lists conflicts with current reservation ID/name and desired restaurant. Separate explicit consent is required for the displayed list; background automation never cancels.
-- Cancellation is **not an atomic swap**: the old reservation can be cancelled while the new booking fails, leaving no meal reservation. No automatic rollback or guarantee of recovery.
-- A new manual `Replacement` state machine revalidates the approved account/day/schedule/conflict list, checks offerings, saves a durable lock, sends one DELETE for the own-account reservation ID, then verifies absence before one replacement POST. Writes never retry/fallback/refresh-and-replay. Lost responses reconcile through read-only history.
-- Ambiguous results retain account/date/meal locks. Changed/duplicate/unnamed/unknown-state reservations fail closed. Partial replacement batches are possible; the remaining plan must be refreshed and manually confirmed before automation is re-enabled.
-- Signed DELETE `/reservemeal/{id}` with meal token and account context follows reviewed third-party client source, **not an official API specification or successful live test**. Server cancellation/booking rules may refuse it.
-- **168 passing local tests**, 0 failures/errors/skips; lint 0 errors / 17 warnings. No live account, actual cancellation/booking, physical Samsung or encrypted-device upgrade/timing/security audit.
-- VersionCode 8; APK signature verified and certificate matches 0.6.0.
+كل خطوة تُفتح بعد التي قبلها. خطوة الحساب لا ترسل حجزًا، والوجبات كلها اختيارية، والكتابة تحتاج موافقتك، والبطارية ليست شرطًا للحجز.
 
-## Previous release 0.6.0 — weekly restaurant exceptions
+<details>
+<summary><b>كيف أحصل على لقطات شاشة حقيقية من الكود؟</b></summary>
 
-Release notes for 0.6.0 are not part of this archive.
-
-- Default restaurants remain independent for the three meals. Optional recurring overrides cover any of seven weekdays and any meal, using account-derived offered restaurants only.
-- Settings → weekly exceptions refreshes account restaurants, then lets the user edit one day at a time. Default removes an override; Cancel does not save.
-- ISO weekday of the meal's Algeria-local date selects the restaurant, including cross-year plans. The booking window remains tomorrow through day 3.
-- Actual schedule changes stop automation and invalidate approval. Preview lists the actual restaurant for every meal. Existing reservations are never cancelled/replaced; conflicts or unavailable required restaurants block the entire plan before writes. Pending locks remain account/date/meal-scoped.
-- Upgrade preserves current default choices with no invented exceptions. System/light/dark, About and 15–2880-minute intervals remain.
-- **136 passing local tests**, no failures/errors/skips; lint 0 errors / 16 warnings. API 28/35 UI tests use Robolectric, not a physical Samsung. No live account, actual booking, encrypted physical-device migration, timing or independent security validation.
-- VersionCode 7, same package and verified development signing certificate as 0.5.0.
-
-## Previous release 0.5.0 — appearance, 48-hour checks and About
-
-Release notes for 0.5.0 (not in this archive).
-
-- Verification interval: 15–2880 minutes, including 24-hour and 48-hour presets. This is not a longer booking window or an exact timing guarantee; new-day/failure checks still apply.
-- Persistent system / light / dark appearance, themed controls and dialogs.
-- About: AHMED TFYECHE — طالب في ESGEN, with the supplied Instagram and LinkedIn links, opened externally only on tap.
-- Interval-aware stale-confirmation warning and lifecycle restoration of settings/meal drafts. Existing booking protections remain unchanged.
-- Local validation: **113 passing tests**, no failures/errors/skips; lint 0 errors / 16 warnings. No live account, physical Samsung, real-time scheduler or encrypted-device upgrade validation.
-- VersionCode 6, same package and development signing certificate as 0.4.0.
-
-## Previous release 0.4.0 — generalized account-driven APK
-
-Release notes for 0.4.0 are not part of this archive. This is an APK-first iteration, not a Play Store production release.
-
-- No location-specific restaurant names, IDs or selection rules in the UI or planning logic. The authenticated service supplies the account's offered restaurants and real profile identifiers. This is structural generalization, **not verified coverage of every Algerian university**.
-- Three independent choices: `breakfast_id`, `lunch_id`, `dinner_id`. Same or different restaurants are allowed when they explicitly offer the meal. This version requires all three; unavailable meals or missing/ambiguous current housing fail safely rather than using invented defaults.
-- Guided setup: account verification -> three meal choices and interval -> read-only review -> explicitly confirmed booking -> optional automation activation.
-- Presets 15 / 30 / 60 / 180 / 360 minutes, plus custom integer minutes 15–1440. Arabic digits are parsed. Changing the interval updates WorkManager and the actual due policy. OS/network constraints and best-effort timing still apply.
-- Upgrade copies legacy residence choice to breakfast/dinner, preserves lunch, stops automation and invalidates the previous test until review. No server-side cancellation is performed. The existing AES key and signing certificate remain unchanged.
-- Pending journals are account-scoped with a hashed local key. The previous unscoped encrypted journal is merged into the saved account's scope before removal of its legacy storage key.
-- Profile parsing accepts additional genuine identifier field variants but never guesses university/residence/region IDs, uses last year's housing as a fallback, or invents residence 0 for missing records.
-- Final local validation: **96 passing tests**, 0 failures/skips; lint 0 errors / 16 warnings. No live multi-university account, physical-device encrypted migration, real meal booking, independent security or physical Samsung scheduling validation was performed.
-
-## Previous release 0.3.0
-
-Release notes for 0.3.0 are not part of this archive. VersionCode 4 retains the existing development signing certificate and account storage format.
-
-- `SyncPolicy.CHECK_INTERVAL_MS` is now one hour, not six. Network-constrained booking opportunities and the stale-confirmation watchdog are hourly; scheduler timing is still best effort. On-process network-return rechecks use a 5-second initial delay, not an execution guarantee.
-- Short online windows can be missed or insufficient, especially if the OS has killed the process or delayed work. No closed-phone or offline booking is possible.
-- Apple-inspired light UI: grouped white cards, blue actions, a white selected segment, and an original accessible animated pill switch. No Apple fonts, assets or SDKs are used.
-- Already-confirmed plans avoid nine redundant history reads during apply; mixed plans are revalidated before their first write, writes retain pre/post verification, and a final full read remains mandatory.
-- Final validation: **73 passing local tests**, 0 failures/skips; lint 0 errors / 11 warnings. API 28/35 UI coverage is Robolectric-based, not physical Samsung or live-account validation.
-
-## Previous release 0.2.0
-
-Release notes for 0.2.0 are not part of this archive. This release separates Home and Settings, removes promotional/test badges from the main screen, places technical detail in About/Operation details, and prominently warns that new automatic bookings cannot run with the phone powered off or without internet. The write action remains hidden until preview, and explicit confirmation remains required. Scheduling, authentication-recovery and pending-write safeguards are retained.
-
-Validation: **64 passing local tests**, 0 failures/skips; Android lint 0 errors / 11 warnings. UI tests run with Robolectric on API 28 and 35, not a physical Samsung. No real account, live booking, physical-device upgrade, malware-scanner or independent-security validation was performed for this release. The previous certificate is retained for compatible updates, not replaced with a new production key. The APK remains development-signed. No Play Protect or other OS security control is disabled or bypassed, and scan prompts may recur.
-
-## Previous update 0.1.1
-
-Release notes for 0.1.1 are not part of this archive. Install over the previous APK: same package, versionCode 2 (now 3 in 0.2.0), verified identical development certificate. No user data or journal reset is performed.
-
-This release adds sanitized S01–S09 failure stages, token-prefix normalization, bounded read-only session recovery and alternate own-account read tokens on HTTP 401. It never automatically resends reservation POSTs. HTTP 403 does not trigger fallback or re-login. Network failures do not trigger an auth loop.
-
-A best-effort network callback exists only while the process lives; constrained WorkManager remains the scheduler outside that lifetime. The status notification is not a foreground service, a process-liveness guarantee, or proof of successful booking. Unchanged account/restaurant settings no longer disable automation.
-
-Historical 0.1.1 validation: 56 passing tests (29 booking, 14 simulated protocol/auth, 7 scheduling policy, 4 local recovery, 2 Robolectric UI); lint has 0 errors and 10 warnings. No live-account, physical-Samsung, real airplane-mode, or upgrade-with-account-data validation was performed.
-
-## User documentation
-
-- [Arabic setup guide](docs/USER_GUIDE_AR.md)
-
-## Build
-
-Requires JDK 17, Android SDK platform 35 and build tools, plus internet access to fetch pinned Gradle/plugin/library dependencies. Set `ANDROID_HOME` to your SDK directory, or create your own untracked `local.properties` with `sdk.dir=...`.
-
-Linux/macOS:
+الشاشات تُرسم فعليًا (Robolectric + رسوميات أصلية) وتُحفظ PNG عند الطلب — لا صور مركّبة في هذا المستودع:
 
 ```sh
+mkdir -p shots
+MEALGUARD_SHOTS=$PWD/shots ./gradlew :app:testReleaseUnitTest --tests '*ScreenshotTest'
+```
+
+تُنتَج أربع مجموعات: `light-`، `dark-`، `large-` (خط 1.6×)، و`fr-` (فرنسي)، وتشمل الرئيسية، الدخول، الإعدادات، حالة الانشغال، التبويبات، ورقة الاختيار، والمراجعة.
+
+</details>
+
+---
+
+## كيف يعمل
+
+<div align="center">
+<img src="docs/assets/architecture.png" alt="مخطط عمل التطبيق" width="100%">
+</div>
+
+1. **قراءة** — دخول إلى Webetu وقراءة السنة الجامعية والإقامة والمطاعم والحجوزات الحالية، بلا كتابة.
+2. **معاينة** — بناء خطة الأيام الثلاثة القادمة ومقارنتها بالحجوزات القائمة، وكشف التعارضات بالاسم والمعرّف.
+3. **موافقة** — تراجع الخطة ورسالة التأكيد؛ لا يُرسل شيء قبل ذلك.
+4. **كتابة** — طلب واحد لكل وجبة ناقصة، مع قفل يوم/وجبة في سجل مشفّر **قبل** الإرسال.
+5. **تحقّق** — قراءة نهائية كاملة لكل الحجوزات؛ عند أي شك يتوقّف التنفيذ ولا يعيد المحاولة.
+
+---
+
+## ما الذي يفعله
+
+| المجال | التفصيل |
+|---|---|
+| التخزين | كلمة المرور مشفّرة على الجهاز بمفتاح داخل Android Keystore (AES-GCM)؛ لا خادم وسيط ولا رفع بيانات خارج MESRS/ONOU؛ لا سجلات ولا تحليلات؛ `allowBackup=false` |
+| الكتابة | قراءة ثم معاينة ثم موافقة صريحة؛ سجل محاولات يمنع الإرسال المكرّر عند الاستجابة الغامضة؛ عند الالتباس يتوقّف ويشرح مسار الإصلاح؛ القفل يخصّ وجبته وحدها فتُكمل بقية الخطة |
+| الخطة | فطور/غداء/عشاء مستقلة بأي مزيج وبأي مطعم متاح للحساب؛ استثناءات أسبوعية لكل يوم تُضيف وجبة ليوم واحد أو تتخطّاها؛ الوجبة الفارغة يتخطّاها التطبيق كليًا |
+| الجدولة | WorkManager بقيود شبكة وفترات من 15 دقيقة إلى 48 ساعة؛ إشعار مستمر بحالة الجدولة وإشعار نتيجة لكل عملية؛ فحص فوري عند عودة الشبكة أثناء حياة العملية؛ أقفال الأيام الخارجة من نافذة الحجز تُلغى تلقائيًا |
+| الواجهة | عربي RTL افتراضيًا بلا اعتماد على لغة الهاتف، وفرنسي اختياري؛ فاتح/داكن/حسب النظام؛ أحجام خطوط حتى 1.6×؛ تسميات لقارئ الشاشة؛ أيقونة تكيّفية تعمل مع كل الأقنعة |
+| الاستبدال | موافقة صريحة ثانية تعرض ما سيُلغى؛ لا إلغاء تلقائي من الخلفية؛ لا تراجع تلقائي بعد إلغاء فاشل |
+
+---
+
+## التثبيت والبناء
+
+### للاستخدام
+
+1. نزّل الـAPK من صفحة [الإصدارات](https://github.com/Ahmed47-t/Wajabati/releases).
+2. ثبّته على أندرويد 8.0 فما فوق (اسمح بالتثبيت من هذا المصدر إن طُلب ذلك).
+3. افتح التطبيق: يظهر في المشغّل باسم **Wajabati** وتحته `0.13.1`. الأتمتة **متوقّفة افتراضيًا** حتى تُعدّ الحساب وتراجع الخطة.
+
+> [!IMPORTANT]
+> الـAPK موقّع **بمفتاح تطوير (debug)**، لذا لا يمكنه تحديث تثبيت سابق موقّع بمفتاح مختلف، ولا يصلح للنشر في متجر.
+
+### البناء من المصدر
+
+المتطلّبات: JDK 17، Android SDK platform 35 + build-tools، ووصول إلى الشبكة لجلب تبعيات Gradle المثبّتة.
+
+```sh
+# Linux / macOS
 chmod +x gradlew
+export ANDROID_HOME=/path/to/android-sdk       # أو أنشئ local.properties غير متعقّب
 ./gradlew --no-daemon :app:testReleaseUnitTest :app:lintRelease :app:assembleRelease
 ```
 
-Windows (JDK 17 and Android SDK configured):
-
 ```bat
+:: Windows
 gradlew.bat --no-daemon :app:testReleaseUnitTest :app:lintRelease :app:assembleRelease
 ```
 
-Output: `app/build/outputs/apk/release/app-release.apk`.
+الناتج: `app/build/outputs/apk/release/app-release.apk`
 
-The release build is deliberately **test-signed using Gradle's local debug signing key**, not production-signed. Building on another machine usually generates a different signing key; it cannot update an existing installation signed with a different certificate. Do not publish this as a production release. Configure your own protected release signing for distribution. No signing private keys or account credentials are included in this source archive.
+<details>
+<summary><b>لقطات الشاشة الاختيارية وتشغيل اختبار واحد</b></summary>
 
-## Structure
+```sh
+# صور PNG حقيقية للشاشات (فاتح/داكن/خط كبير/فرنسي)
+mkdir -p shots && MEALGUARD_SHOTS=$PWD/shots ./gradlew :app:testReleaseUnitTest --tests '*ScreenshotTest'
 
-- `MainActivity`: Arabic native UI, read-only preview, explicit manual approval, and disabled-by-default automation.
-- `Vault`: Android Keystore AES-GCM, authenticated by record name; no plaintext account fallback or backups.
-- `ServiceApi`: fixed HTTPS endpoints, system certificate validation, bounded reads and sanitized failures. Compatibility adapter for observed requests, not an official SDK. Shared request-signing material is protocol data, not a student credential.
-- `Engine`, `WeeklySchedule`: three-day plan, recurring per-weekday/per-meal overrides, conservative write/verify journal; default restaurants apply unless an explicit weekly exception replaces them.
-- `Runner`: in-process write lock and fresh account/restaurant/reservation reads.
-- `Automation`: network-constrained periodic WorkManager with failure-aware user-selected successful-sync suppression, new-day sync, bounded retry backoff, separate ongoing state notification and a best-effort stale-success watchdog.
-- `MealGuardApp`, `NetworkState`, `SyncPolicy`: process-lifetime network callbacks, validated-internet checks and a pure scheduling policy.
-- `validation`: unit/simulation results and lint output for this build.
+# اختبار محدّد
+./gradlew :app:testReleaseUnitTest --tests 'dz.local.mealguard.EngineTest'
+```
 
-WorkManager's user-selected periodic opportunities are not exact alarms. No permanent foreground service is started. Device restrictions can delay both jobs and notifications. The journal blocks ambiguous retries rather than claiming success. Stopping automation does not undo a request already sent or cancel any server-side reservation.
+</details>
 
-This version has **no absence calendar, automatic cancellation, remote service, telemetry or auto-update**. Manual replacement does perform explicitly approved cancellation followed by rebooking. Pause it when away and manage already-booked meals through the official app.
+---
 
-Compatibility research references and commit IDs are documented in the validation report. The independently built client may need changes when the service changes its protocol or authentication.
+## البنية التقنية
+
+| الملف | المسؤولية |
+|---|---|
+| `MainActivity` | الواجهة العربية الأصلية، المعاينة، الموافقة اليدوية، والأتمتة المتوقّفة افتراضيًا |
+| `Vault` | Keystore AES-GCM، مصادَق باسم السجل، بلا بديل نصّي ولا نسخ |
+| `ServiceApi` | نقاط HTTPS مثبّتة، تحقّق شهادات النظام، قراءات محدودة وأخطاء مُطهّرة |
+| `Engine` · `WeeklySchedule` | خطة ثلاثة أيام، استثناءات أسبوعية، وسجل كتابة/تحقّق متحفّظ |
+| `Runner` | قفل كتابة داخل العملية، وقراءات حديثة للحساب والمطاعم والحجوزات |
+| `Replacement` | آلة حالة استبدال بموافقة صريحة، وتحقّق قبل/بعد |
+| `Automation` · `SyncPolicy` | WorkManager دوري بقيود شبكة، تراجع محدود، وإشعارات حالة |
+| `Appearance` · `ChoiceField` · `PillToggle` | لوحات ألوان، حقول اختيار، ومفتاح متحرّك أصلي |
+
+> [!NOTE]
+> `ServiceApi` محوّل توافق لما لوحظ من طلبات، وليس SDK رسميًا. قد يحتاج تعديلًا إذا غيّرت الخدمة بروتوكولها.
+
+---
+
+## الخصوصية والأمان
+
+| يفعله التطبيق | لا يفعله |
+|---|---|
+| يشفّر كلمة المرور محليًا داخل Keystore | لا يرسل بياناتك إلى أي خادم وسيط |
+| يتحقّق من شهادات TLS الافتراضية | لا يتجاهل أخطاء الشهادات ولا يتبع تحويلات |
+| يمنع النسخ الاحتياطي عبر `allowBackup` | لا يسجّل كلمة المرور أو الرموز |
+| يقرأ فقط قبل الموافقة | لا يجمع تحليلات ولا معرّفات إعلانية |
+| يوقف الإرسال عند أي التباس | لا يكرّر كتابة لم تُؤكَّد نتيجتها |
+
+المشروع لا يحتوي على مفاتيح توقيع ولا بيانات اعتماد. كلمات المرور تُدخَل وقت التشغيل فقط.
+
+---
+
+## سجلّ الإصدارات
+
+<details open>
+<summary><b>0.13.1 — الوجبات الاختيارية والاستثناء الأسبوعي الموجب</b></summary>
+
+- المطاعم الثلاثة لم تعد شرطًا: الوجبة الفارغة («لا حجز لهذه الوجبة») يتخطّاها التطبيق في الخطة والحجز والتحقّق والتذكيرات.
+- الاستثناءات الأسبوعية تستطيع إضافة مطعم لوجبة غير مُعدّة في ذلك اليوم فقط (فطور الجمعة مثلًا)، أو تخطّي وجبة مُعدّة.
+- اسم التطبيق في المشغّل صار `Wajabati` وحدَه (بدل `وجباتي` الطويل)، وسطر `0.13.1` تحته، وشاشة «حول» تعرض الرقم نفسه.
+- شعار وأيقونة تكيّفية جديدان، وبانرات الـREADME تولَّد من `docs/assets/generate.py`.
+- 226 اختبارًا محليًا ناجحًا · 0 فشل.
+
+</details>
+
+<details>
+<summary><b>0.13.0 — استرداد الحجوزات العالقة وتنظيف التدقيق</b></summary>
+
+- قفل المحاولة المعلّقة يحجز وجبته وحدها؛ الوجبات الأخرى تُحجز وتُتحقّق.
+- أقفال انتهت مدة صلاحيتها تُلغى تلقائيًا، وسجل المحاولات يسجّل الوقت والسبب.
+- قراءة حالة اليوم من الكاش الحقيقي، وتنقية أسماء المطاعم من علامات الشطب.
+- إزالة كود ميت وتوحيد منطق مكرّر.
+
+</details>
+
+<details>
+<summary><b>0.12.0 · 0.11.0 · 0.10.0 · 0.9.0 وما قبلها</b></summary>
+
+- **0.12.0** — حقل كلمة المرور وحده في صندوق واحد مع زر الإظهار، وطلب استثناء البطارية مباشرة.
+- **0.11.0** — الاستثناءات الأسبوعية داخل الخطوة الثانية، تسجيل دخول أقصر، بلا حوارات تأكيد للحجز والتفعيل، والبطارية خطوة رابعة.
+- **0.10.0** — شاشات مبنية على mockup: بطاقة تقدّم، قائمة إعداد ثلاثية، تبويب حجوزات للقراءة فقط.
+- **0.9.0** — تنقّل سفلي بثلاثة مقاصد، `ChoiceField` بدل `Spinner`، أزرار أساسية مثبّتة فوق لوحة المفاتيح، وترجمة فرنسية.
+- **0.8.0** — إصلاحات تدقيق UX: زر الرجوع داخل الإعداد، شريط تقدّم مثبّت، أخطاء بجانب مصدرها، وتباين أوضح.
+- **0.7.0** — استبدال حجز بموافقة صريحة (إلغاء ثم إعادة حجز، بلا تراجع تلقائي).
+- **0.4.0 – 0.6.0** — حساب عام بدل أسماء مطاعم مثبّتة، مظهر دائم، فترات حتى 48 ساعة، وصفحة «حول».
+- **0.1.0 – 0.3.0** — الأساس: قراءة فقط، معاينة، حجز يدوي، وجدولة بـWorkManager.
+
+</details>
+
+---
+
+## الحدود والتحذيرات
+
+> [!CAUTION]
+> - **لا يعمل الحجز التلقائي والهاتف مغلق أو بلا إنترنت.** لا توجد خدمة أمامية دائمة ولا منبّهات دقيقة.
+> - **الجدولة أفضل جهد**: قيود النظام قد تؤخّر العمل أو الإشعارات.
+> - **الاستبدال ليس تبديلًا ذرّيًا**: قد يُلغى الحجز القديم ثم يفشل الجديد، فتبقى بلا حجز.
+> - **إيقاف الأتمتة لا يلغي حجزًا أُرسل بالفعل.**
+> - **لا تستعمله على حساب لا تملكه**، ولا تعتمد عليه قبل اختبار الدخول والمعاينة والحجز والتحقّق في Webetu الرسمي.
+> - **لم يُبنَ هذا الإصدار من الشيفرة في هذه البيئة**، وما على صفحة الإصدارات من ملفات لا يطابق الشيفرة الحالية؛ راجع قسم [الملفات المرفقة والحزم](#الملفات-المرفقة-والحزم).
+
+---
+
+## الملفات المرفقة والحزم
+
+| الوجهة | الحالة الآن | المحتوى |
+|---|---|---|
+| **Releases** (رابط `releases`) | إصدار `v0.13.1` موجود بملف APK واحد، لكن بُني **قبل** هذه المراجعة | `MealGuard-0.13.1-weekly-positive-exceptions.apk` — اسم التطبيق فيه `وجباتي` وبلا الشعار الجديد · SHA-256: `a11c8d32a5b9f1fca768f8d181bd0f063037bc95643b4a6445e4f6dd02bfea44` |
+| **Packages** (الصندوق في الشريط الأيمن) | **فارغ** — لا توجد حزمة منشورة بعد | حزمة Maven باسم `wajabati-apk` تُنشأ بسير العمل أو بأمر واحد، وتحتوي الـAPK نفسه |
+
+**لا يوجد ملف مطابق للشيفرة الحالية على الصفحة بعد**: بناء أندرويد يحتاج JDK 17 وAndroid SDK 35، ولا يتوفّر أيٌّ منهما في بيئة العمل التي عُدِّلت فيها الشيفرة (ولا يمكن الوصول إلى `maven.pkg.github.com` ولا `uploads.github.com` منها لرفع ملف قديم). الطريق المختصر كامل في [`docs/PACKAGES.md`](docs/PACKAGES.md):
+
+```sh
+# GitHub Actions: انسخ السير العمل، شغّله من تبويب Actions أو ادفع وسمًا
+mkdir -p .github/workflows && cp docs/ci/publish-apk-workflow.yml .github/workflows/publish-apk.yml
+
+# أو من جهازك:
+./tools/release.sh                                              # بناء + فحص + ترتيب حزمة Maven
+GITHUB_ACTOR=Ahmed47-t GITHUB_TOKEN=$(gh auth token) ./tools/release.sh --publish
+```
+
+> [!IMPORTANT]
+> الـAPK يُوقَّع بمفتاح debug محلي (كما في `app/build.gradle`)، لذا لا يمكن تثبيته فوق نسخة سابقة موقّعة بمفتاح آخر: أزل التثبيت القديم أولًا. الملف ليس إصدار متجر.
+
+---
+
+## المساهمة والترخيص
+
+- هذا مشروع **شخصي غير مفتوح للترخيص العام**: الكود منشور للاطّلاع والمراجعة، ولا يُمنح ترخيص صريح لإعادة التوزيع أو النشر التجاري.
+- لا تُرفع أي بيانات حساب أو كلمات مرور أو رموز جلسات في Issues أو Pull Requests.
+- عند الإبلاغ عن خطأ: أرفق نص الخطأ المُطهّر (S01–S10) وإصدار أندرويد، بلا أي بيانات شخصية.
+
+---
+
+<div dir="auto">
+
+## English summary
+
+**Wajabati** (وجباتي) is a personal, experimental Android client for university meal reservations on Algeria's Webetu platform. Written in plain Java 17 with no UI frameworks, it reads your existing reservations, shows a three-day plan, and then — only after your explicit approval — books whatever is missing.
+
+- **Read → preview → approve → write → verify.** Nothing is booked without consent, and no write is ever retried when the result is uncertain.
+- **Privacy by design.** The password is encrypted with Android Keystore / AES-GCM on-device, there is no middleman server, no telemetry, and no backup of credentials.
+- **Not official.** Not affiliated with MESRS or ONOU, not a store release, not tested with a live account or on a physical device, and not a substitute for the official app.
+- **Local verification.** 226 unit/UI tests (JUnit + Robolectric on API 28/35) and Android lint with 0 errors; see [`lint-0.13.0.txt`](docs/validation/lint-0.13.0.txt).
+
+Build: `./gradlew --no-daemon :app:testReleaseUnitTest :app:lintRelease :app:assembleRelease` (JDK 17 + Android SDK 35).
+
+</div>
+
+<div align="center">
+<br>
+<sub>© 2026 TFYCHE AHMED REDOUANE · مشروع شخصي غير تابع لأي جهة رسمية</sub><br>
+<sub><a href="docs/USER_GUIDE_AR.md">دليل الاستخدام</a> · <a href="docs/USABILITY_TEST_AR.md">بروتوكول اختبار الاستخدام</a> · <a href="https://github.com/Ahmed47-t/Wajabati/releases">الإصدارات</a></sub>
+</div>

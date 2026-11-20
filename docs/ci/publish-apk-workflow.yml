@@ -1,0 +1,69 @@
+name: publish-apk
+
+# Publishes the release APK to GitHub Packages (Maven registry) so it appears under the
+# "Packages" box on the repository page, and attaches it to the GitHub release.
+#
+# Enable once in the repository:
+#   1. Settings > Actions > General > Workflow permissions > Read and write permissions.
+#   2. Copy this file to .github/workflows/publish-apk.yml (a GitHub App token cannot push
+#      workflow files, so it lives here until you move it).
+# Then run it from the Actions tab, or push a tag like v0.13.2.
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Read version
+        run: |
+          VERSION="$(sed -n "s/.*versionName '\([^']*\)'.*/\1/p" app/build.gradle)"
+          CODE="$(sed -n "s/.*versionCode \([0-9]*\).*/\1/p" app/build.gradle)"
+          echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
+          echo "CODE=${CODE}" >> "$GITHUB_ENV"
+
+      - name: Tests and lint
+        run: ./gradlew --no-daemon :app:testReleaseUnitTest :app:lintRelease
+
+      - name: Assemble release APK
+        run: ./gradlew --no-daemon :app:assembleRelease
+
+      - name: Stage Maven layout for GitHub Packages
+        run: bash docs/ci/stage-apk-package.sh
+
+      - name: Publish package
+        run: |
+          for f in build/gh-packages/dz/local/mealguard/wajabati-apk/${VERSION}/*; do
+            name="$(basename "$f")"
+            curl --fail-with-body -sS -X PUT \
+              -u "${GITHUB_ACTOR}:${GITHUB_TOKEN}" \
+              -H "Content-Type: application/octet-stream" \
+              --data-binary @"$f" \
+              "https://maven.pkg.github.com/${GITHUB_REPOSITORY}/dz/local/mealguard/wajabati-apk/${VERSION}/${name}"
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Attach to GitHub release
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1 \
+            || gh release create "${GITHUB_REF_NAME}" --title "Wajabati ${VERSION}" --prerelease --generate-notes
+          gh release upload "${GITHUB_REF_NAME}" "build/gh-packages/Wajabati-${VERSION}.apk" --clobber

@@ -4,3 +4,7 @@ app/build/
 local.properties
 *.jks
 *.keystore
+
+# Python bytecode from docs/assets/generate.py
+__pycache__/
+*.pyc
