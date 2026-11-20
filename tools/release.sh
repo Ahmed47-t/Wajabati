@@ -30,7 +30,11 @@ SIZE="$(du -h "$APK" | cut -f1)"
 echo "== ${APK} (${SIZE})"
 echo "== sha256 ${SHA}"
 
-# 4. Optional publish: ./tools/release.sh --publish
+# 4. Stage the Maven layout for GitHub Packages (Packages box on the repository page).
+bash docs/ci/stage-apk-package.sh >/dev/null
+echo "== staged for packages: build/gh-packages/dz/local/mealguard/wajabati-apk/${VERSION}/"
+
+# 5. Optional publish: ./tools/release.sh --publish
 if [[ "${1:-}" == "--publish" ]]; then
   ASSET="Wajabati-${VERSION}.apk"
   cp "$APK" "$ASSET"
@@ -40,4 +44,19 @@ if [[ "${1:-}" == "--publish" ]]; then
     --prerelease
   rm -f "$ASSET"
   echo "== published ${TAG}"
+
+  # 5b. Also publish as a package, if the token has the packages:write scope.
+  #     GITHUB_ACTOR / GITHUB_TOKEN must be set for this step.
+  if [[ -n "${GITHUB_TOKEN:-}" && -n "${GITHUB_ACTOR:-}" ]]; then
+    for f in build/gh-packages/dz/local/mealguard/wajabati-apk/"${VERSION}"/*; do
+      name="$(basename "$f")"
+      curl --fail-with-body -sS -X PUT -u "${GITHUB_ACTOR}:${GITHUB_TOKEN}" \
+        -H "Content-Type: application/octet-stream" --data-binary @"$f" \
+        "https://maven.pkg.github.com/Ahmed47-t/Wajabati/dz/local/mealguard/wajabati-apk/${VERSION}/${name}" \
+        && echo "== package: ${name}" \
+        || echo "-- package upload skipped for ${name} (token needs packages:write)"
+    done
+  else
+    echo "-- GITHUB_TOKEN/GITHUB_ACTOR not set: package upload skipped (release only)"
+  fi
 fi

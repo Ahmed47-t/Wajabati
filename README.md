@@ -1,13 +1,14 @@
 <div align="center">
 
-<img src="docs/assets/logo-lockup.png" width="420" alt="Wajabati — وجباتي">
+<img src="docs/assets/logo-lockup.png" width="420" alt="Wajabati — meal reservation client">
 
-# Wajabati · وجباتي
+# Wajabati
 
 **عميل أندرويد شخصي لحجز الوجبات الجامعية على Webetu · 0.13.1**
 **A personal Android client for university meal reservations on Webetu · 0.13.1**
 
-[![release](https://img.shields.io/github/v/release/Ahmed47-t/Wajabati?include_prereleases&sort=semver&label=release&labelColor=0066DD&color=00A86B)](https://github.com/Ahmed47-t/Wajabati/releases)
+[![version](https://img.shields.io/badge/version-0.13.1-0066DD?labelColor=374151)](https://github.com/Ahmed47-t/Wajabati/releases)
+[![package](https://img.shields.io/badge/GitHub%20Packages-APK-0066DD?labelColor=374151)](docs/PACKAGES.md)
 [![tests](https://img.shields.io/badge/tests-226%20passing-0066DD?labelColor=374151)](app/src/test/java/dz/local/mealguard)
 [![lint](https://img.shields.io/badge/lint-0%20errors-0066DD?labelColor=374151)](docs/validation/lint-0.13.0.txt)
 [![android](https://img.shields.io/badge/Android-8.0%2B-0066DD?logo=android&logoColor=white&labelColor=374151)](https://developer.android.com/about/versions/oreo)
@@ -15,7 +16,7 @@
 [![no backend](https://img.shields.io/badge/backend-none%20%C2%B7%20on--device%20only-0066DD?labelColor=374151)](docs/USER_GUIDE_AR.md#7-الخصوصية)
 [![status](https://img.shields.io/badge/status-experimental%20build-6B7280?labelColor=374151)](#الحدود-والتحذيرات)
 
-<img src="docs/assets/banner.png" alt="وجباتي — حجز الوجبات الجامعية تلقائيًا" width="100%">
+<img src="docs/assets/banner.png" alt="Wajabati — university meal reservations on Webetu" width="100%">
 
 </div>
 
@@ -35,7 +36,7 @@
 - [الخصوصية والأمان](#الخصوصية-والأمان)
 - [سجلّ الإصدارات](#سجلّ-الإصدارات)
 - [الحدود والتحذيرات](#الحدود-والتحذيرات)
-- [الملفات المرفقة](#الملفات-المرفقة)
+- [الملفات المرفقة والحزم](#الملفات-المرفقة-والحزم)
 - [المساهمة والترخيص](#المساهمة-والترخيص)
 - [English summary](#english-summary)
 
@@ -43,7 +44,7 @@
 
 ## نظرة سريعة
 
-وجباتي تطبيق أندرويد أصلي (Java، بلا مكتبات واجهة خارجية) يقرأ حجوزاتك على Webetu **قراءةً فقط**، يعرض خطتك للأيام الثلاثة القادمة، ولا يرسل أي حجز قبل أن ترى الخطة وتوافق عليها بنفسك.
+Wajabati تطبيق أندرويد أصلي (Java، بلا مكتبات واجهة خارجية) يقرأ حجوزاتك على Webetu **قراءةً فقط**، يعرض خطتك للأيام الثلاثة القادمة، ولا يرسل أي حجز قبل أن ترى الخطة وتوافق عليها بنفسك.
 
 | البند | التفصيل |
 |---|---|
@@ -237,35 +238,30 @@ mkdir -p shots && MEALGUARD_SHOTS=$PWD/shots ./gradlew :app:testReleaseUnitTest 
 > - **الاستبدال ليس تبديلًا ذرّيًا**: قد يُلغى الحجز القديم ثم يفشل الجديد، فتبقى بلا حجز.
 > - **إيقاف الأتمتة لا يلغي حجزًا أُرسل بالفعل.**
 > - **لا تستعمله على حساب لا تملكه**، ولا تعتمد عليه قبل اختبار الدخول والمعاينة والحجز والتحقّق في Webetu الرسمي.
-> - **لم يُبنَ هذا الإصدار من الشيفرة في هذه البيئة**، وما على صفحة الإصدارات من ملفات لا يطابق الشيفرة الحالية؛ راجع قسم [الملفات المرفقة](#الملفات-المرفقة).
+> - **لم يُبنَ هذا الإصدار من الشيفرة في هذه البيئة**، وما على صفحة الإصدارات من ملفات لا يطابق الشيفرة الحالية؛ راجع قسم [الملفات المرفقة والحزم](#الملفات-المرفقة-والحزم).
 
 ---
 
-## الملفات المرفقة
+## الملفات المرفقة والحزم
 
-| الإصدار | الملف | مطابقة الشيفرة |
+| الوجهة | الحالة الآن | المحتوى |
 |---|---|---|
-| `v0.13.1` | `MealGuard-0.13.1-weekly-positive-exceptions.apk` (2.0 MB) | **لا.** بُني قبل هذه المراجعة: اسم التطبيق فيه `وجباتي`، وبلا شعار الـREADME الجديد. بصمته عند النشر: `a11c8d32a5b9f1fca768f8d181bd0f063037bc95643b4a6445e4f6dd02bfea44` |
+| **Releases** (رابط `releases`) | إصدار `v0.13.1` موجود بملف APK واحد، لكن بُني **قبل** هذه المراجعة | `MealGuard-0.13.1-weekly-positive-exceptions.apk` — اسم التطبيق فيه `وجباتي` وبلا الشعار الجديد · SHA-256: `a11c8d32a5b9f1fca768f8d181bd0f063037bc95643b4a6445e4f6dd02bfea44` |
+| **Packages** (الصندوق في الشريط الأيمن) | **فارغ** — لا توجد حزمة منشورة بعد | حزمة Maven باسم `wajabati-apk` تُنشأ بسير العمل أو بأمر واحد، وتحتوي الـAPK نفسه |
 
-**لم يُنتَج ملف APK جديد في هذه المراجعة.** بناء أندرويد يحتاج JDK 17 وAndroid SDK 35، وهما غير متوفّرين في بيئة العمل التي أُجريت فيها التعديلات، فالملف المنشور أعلاه لا يحتوي تغييرات الاسم والشعار.
-
-لتوليد ملف مطابق للشيفرة الحالية على جهازك:
-
-```sh
-./tools/release.sh            # فحص تناسق الإصدار + tests + lint + assemble + بصمة SHA-256
-./tools/release.sh --publish  # نفس ما سبق + إنشاء إصدار GitHub ورفع Wajabati-0.13.1.apk
-```
-
-أو يدويًا:
+**لا يوجد ملف مطابق للشيفرة الحالية على الصفحة بعد**: بناء أندرويد يحتاج JDK 17 وAndroid SDK 35، ولا يتوفّر أيٌّ منهما في بيئة العمل التي عُدِّلت فيها الشيفرة (ولا يمكن الوصول إلى `maven.pkg.github.com` ولا `uploads.github.com` منها لرفع ملف قديم). الطريق المختصر كامل في [`docs/PACKAGES.md`](docs/PACKAGES.md):
 
 ```sh
-./gradlew --no-daemon :app:assembleRelease
-sha256sum app/build/outputs/apk/release/app-release.apk
-gh release upload v0.13.1 app/build/outputs/apk/release/app-release.apk
+# GitHub Actions: انسخ السير العمل، شغّله من تبويب Actions أو ادفع وسمًا
+mkdir -p .github/workflows && cp docs/ci/publish-apk-workflow.yml .github/workflows/publish-apk.yml
+
+# أو من جهازك:
+./tools/release.sh                                              # بناء + فحص + ترتيب حزمة Maven
+GITHUB_ACTOR=Ahmed47-t GITHUB_TOKEN=$(gh auth token) ./tools/release.sh --publish
 ```
 
 > [!IMPORTANT]
-> الملف يُوقَّع بمفتاح debug المحلي (كما في `app/build.gradle`). مفتاح جهاز آخر مختلف، لذا لا يمكن تثبيت النسخة الجديدة فوق نسخة سابقة موقّعة بمفتاح آخر: يجب إزالة التثبيت القديم أولًا.
+> الـAPK يُوقَّع بمفتاح debug محلي (كما في `app/build.gradle`)، لذا لا يمكن تثبيته فوق نسخة سابقة موقّعة بمفتاح آخر: أزل التثبيت القديم أولًا. الملف ليس إصدار متجر.
 
 ---
 
