@@ -10,9 +10,7 @@
 *.ttf binary
 *.woff2 binary
 
-# Keep the language bar honest: artwork and prose are documentation, not source.
-docs/assets/** linguist-documentation
-docs/*.md linguist-documentation
+# Prose is documentation, not source.
 README.md linguist-documentation
 
 # Gradle wrapper is generated
