@@ -1,0 +1,21 @@
+plugins { id 'com.android.application' }
+android {
+ namespace 'dz.local.mealguard'
+ compileSdk 35
+ defaultConfig { applicationId 'dz.local.mealguard'; minSdk 26; targetSdk 35; versionCode 15; versionName '0.13.1' }
+ buildTypes { release { minifyEnabled false; signingConfig signingConfigs.debug } }
+ compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+ testOptions { unitTests.returnDefaultValues = true; unitTests.includeAndroidResources = true }
+}
+dependencies {
+ implementation 'androidx.work:work-runtime:2.10.1'
+ testImplementation 'junit:junit:4.13.2'
+ testImplementation 'androidx.work:work-testing:2.10.1'
+ testImplementation 'org.robolectric:robolectric:4.14.1'
+ testImplementation 'org.json:json:20240303'
+}
+
+tasks.withType(Test).configureEach { maxHeapSize = "384m"; maxParallelForks = 1; systemProperty "robolectric.dependency.repo.url", "https://repo.maven.apache.org/maven2" 
+ // Screenshots use native graphics and need more memory: run only on demand with MEALGUARD_SHOTS=<folder> ./gradlew :app:testReleaseUnitTest --tests '*ScreenshotTest'
+ if (!System.getenv("MEALGUARD_SHOTS")) exclude "**/ScreenshotTest*"
+}

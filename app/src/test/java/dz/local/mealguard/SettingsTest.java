@@ -1,0 +1,22 @@
+package dz.local.mealguard;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import org.json.*;
+public class SettingsTest {
+ JSONObject depot(long id,String meal)throws Exception{return new JSONObject().put("id",id).put("nameAR","مطعم تجريبي "+id).put(meal,true);}
+ @Test public void legacyMigrationPreservesOldMealDestinationsAndCredentials()throws Exception{JSONObject old=new JSONObject().put("student","dummy").put("password","test-only").put("dorm_id",10).put("dorm_name","إقامة تجريبية").put("lunch_id",20);JSONObject n=AccountSettings.migrate(old);assertEquals(10,n.getLong("breakfast_id"));assertEquals(10,n.getLong("dinner_id"));assertEquals(20,n.getLong("lunch_id"));assertEquals("إقامة تجريبية",n.getString("dinner_name"));assertEquals("test-only",n.getString("password"));assertFalse(n.has("dorm_id"));assertEquals(2,n.getInt("meal_schema"));assertTrue(old.has("dorm_id"));}
+ @Test public void migrationNeverOverwritesIndependentSelection()throws Exception{JSONObject c=AccountSettings.migrate(new JSONObject().put("dorm_id",10).put("dinner_id",30));assertEquals(30,c.getLong("dinner_id"));}
+ @Test public void noRestaurantIsInventedDuringMigration()throws Exception{JSONObject c=AccountSettings.migrate(new JSONObject().put("student","dummy"));assertFalse(AccountSettings.configured(c));assertFalse(c.has("breakfast_id"));}
+ @Test public void filteringOffersOnlySelectedMeal()throws Exception{JSONArray a=new JSONArray().put(depot(1,"breakfast")).put(depot(2,"lunch")).put(depot(3,"dinner"));for(int m=1;m<=3;m++){assertEquals(1,AccountSettings.options(a,m).size());assertEquals(m,AccountSettings.options(a,m).get(0).getLong("id"));}}
+ @Test public void duplicateDepotIdRejected()throws Exception{JSONArray a=new JSONArray().put(depot(1,"breakfast")).put(depot(1,"dinner"));assertThrows(Engine.Problem.class,()->AccountSettings.options(a,1));}
+ @Test public void independentChoicesSaveWithoutResidenceCoupling()throws Exception{JSONObject[] choices={null,depot(1,"breakfast"),depot(2,"lunch"),depot(3,"dinner")};JSONObject c=AccountSettings.select(new JSONObject().put("student","dummy"),choices);assertEquals(1,c.getLong("breakfast_id"));assertEquals(2,c.getLong("lunch_id"));assertEquals(3,c.getLong("dinner_id"));assertTrue(AccountSettings.configured(c));}
+ @Test public void cannotChooseRestaurantWithoutThatMeal()throws Exception{JSONObject[] choices={null,depot(1,"lunch"),depot(2,"lunch"),depot(3,"dinner")};assertThrows(Engine.Problem.class,()->AccountSettings.select(new JSONObject(),choices));}
+ @Test public void sameRestaurantAllowedForAllThreeMeals()throws Exception{JSONObject d=depot(1,"breakfast").put("lunch",true).put("dinner",true);JSONObject c=AccountSettings.select(new JSONObject(),new JSONObject[]{null,d,d,d});assertEquals(c.getLong("breakfast_id"),c.getLong("dinner_id"));assertTrue(AccountSettings.configured(c));}
+ @Test public void journalNamespacesSeparateAccounts()throws Exception{JSONObject a=new JSONObject().put("student","fake-A"),b=new JSONObject().put("student","fake-B");assertNotEquals(AccountSettings.journalKey(a),AccountSettings.journalKey(b));assertEquals(AccountSettings.journalKey(a),AccountSettings.journalKey(a));assertFalse(AccountSettings.journalKey(a).contains("fake-A"));}
+ @Test public void timingAcceptsArabicDigits(){assertEquals(90,ScheduleConfig.parse("٩٠"));assertEquals(30,ScheduleConfig.parse("۳۰"));assertEquals(15,ScheduleConfig.parse(" 15 "));}
+ @Test public void timingRejectsTooShortAndLong(){for(String s:new String[]{"0","14","2881","9999999999","-20","1.5","abc",""})assertThrows(IllegalArgumentException.class,()->ScheduleConfig.parse(s));}
+ @Test public void limitsAndPresetsValid(){assertEquals(15,ScheduleConfig.parse("15"));assertEquals(2880,ScheduleConfig.parse("2880"));assertEquals(2880,ScheduleConfig.parse("٢٨٨٠"));for(int m:ScheduleConfig.PRESETS)assertTrue(ScheduleConfig.valid(m));}
+ @Test public void customIntervalControlsGate(){long n=System.currentTimeMillis();assertTrue(SyncPolicy.due(n-15*60000,0,n,15));assertFalse(SyncPolicy.due(n-14*60000,0,n,15));assertFalse(SyncPolicy.due(n-45*60000,0,n,90));assertTrue(SyncPolicy.due(n-90*60000,0,n,90));}
+ @Test public void longIntervalsKeepBookingWindowSeparate(){assertTrue(ScheduleConfig.valid(2880));assertFalse(ScheduleConfig.valid(2881));assertEquals("كل 48 ساعة",ScheduleConfig.label(2880));assertEquals(49*3600000L,ScheduleConfig.staleAfterMillis(2880));assertEquals(24*3600000L,ScheduleConfig.staleAfterMillis(15));}
+
+}
