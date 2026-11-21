@@ -75,10 +75,13 @@ keyPassword=********
 
 ## البناء الآلي من GitHub
 
-1. `Actions` ← `Build` ← `Run workflow` (أو دفع وسم `v0.14.0` لنشر الإصدار تلقائيًا).
-2. نزّل الحِزمة `Wajabati-0.14.0-apk` من أسفل صفحة التشغيل، وداخلها الملف وبصمة `SHA-256`.
+ملف السير العمل جاهز في `docs/ci/build.yml`، ويحتاج لصقه مرة واحدة في `.github/workflows/build.yml` من واجهة GitHub
+(`Add file` ← `Create new file`) لأن رفع ملفات سير العمل يحتاج صلاحية `workflows` في الرمز المستخدم للرفع:
 
-سير العمل نفسه يشغّل `:app:testReleaseUnitTest` و`:app:lintRelease` قبل البناء، ويرفع التقارير كحِزمة منفصلة.
+1. `Actions` ← `Build` ← `Run workflow` (أو دفع وسم `v0.14.0` لنشر الإصدار تلقائيًا).
+2. نزّل الحِزمة `apk` من أسفل صفحة التشغيل، وداخلها `Wajabati-0.14.0.apk` وبصمة `SHA-256`.
+
+السير العمل يشغّل `:app:testReleaseUnitTest` و`:app:lintRelease` قبل البناء، ويرفع التقارير كحِزمة منفصلة.
 
 ## البناء من المصدر
 
