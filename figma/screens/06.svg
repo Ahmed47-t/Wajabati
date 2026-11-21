@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="1080" viewBox="0 0 390 1080" dir="rtl"><title>06 · الإعداد — الخطوة 3: المراجعة</title><rect width="390" height="1080" fill="#F2F2F7"/><g font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif"><rect x="0" y="0" width="390" height="28" rx="0" fill="#F2F2F7" opacity="1"/>
+<text x="374" y="19" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="12" fill="#1C1C1E" text-anchor="end" opacity="1" font-weight="700">9:41</text>
+<text x="16" y="19" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="11" fill="#6C6C73" text-anchor="start" opacity="1">Wajabati</text>
+<text x="370" y="66" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="22" fill="#1C1C1E" text-anchor="end" opacity="1" font-weight="700">المراجعة</text>
+<text x="370" y="88" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="14" fill="#6C6C73" text-anchor="end" opacity="1">الخطوة 3 من 4</text>
+<text x="28" y="66" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="18" fill="#6C6C73" text-anchor="start" opacity="1">✕</text>
+<rect x="20" y="98" width="350" height="5" rx="3" fill="#C7C7CC" opacity="1"/>
+<rect x="107.5" y="98" width="262.5" height="5" rx="3" fill="#0064D8" opacity="1"/>
+<rect x="20" y="118" width="350" height="560" rx="20" fill="#FFFFFF" opacity="1"/>
+<text x="354" y="148" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="19" fill="#1C1C1E" text-anchor="end" opacity="1" font-weight="700">خطة الأيام الثلاثة</text>
+<text x="354" y="172" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="13" fill="#6C6C73" text-anchor="end" opacity="1">حالة كل وجبة كما تظهر الآن في Webetu · التحقق كل ساعة</text>
+<text x="354" y="204" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="14" fill="#1C1C1E" text-anchor="end" opacity="1" font-weight="700">الثلاثاء 21/11 · اليوم</text>
+<rect x="318" y="216" width="40" height="40" rx="11" fill="#E3E3E8" opacity="1"/>
+<text x="338" y="242" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="16" fill="#0064D8" text-anchor="middle" opacity="1" font-weight="700">☕</text>
+<text x="306" y="234" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="12" fill="#6C6C73" text-anchor="end" opacity="1">فطور الصباح</text>
+<text x="306" y="254" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="15" fill="#1C1C1E" text-anchor="end" opacity="1" font-weight="700">مطعم الجامعة المركزي</text>
+<rect x="246" y="220" width="60" height="24" rx="10" fill="#E4F5E9" opacity="1"/>
+<text x="276.0" y="237" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="12" fill="#17662B" text-anchor="middle" opacity="1" font-weight="700">محجوز</text>
+<rect x="318" y="268" width="40" height="40" rx="11" fill="#E3E3E8" opacity="1"/>
+<text x="338" y="294" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="16" fill="#0064D8" text-anchor="middle" opacity="1" font-weight="700">🍲</text>
+<text x="306" y="286" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="12" fill="#6C6C73" text-anchor="end" opacity="1">الغداء</text>
+<text x="306" y="306" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="15" fill="#1C1C1E" text-anchor="end" opacity="1" font-weight="700">مطعم الإقامة</text>
+<rect x="214" y="272" width="92" height="24" rx="10" fill="#FFF6E2" opacity="1"/>
+<text x="260.0" y="289" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="12" fill="#875600" text-anchor="middle" opacity="1" font-weight="700">غير محجوز</text>
+<rect x="318" y="320" width="40" height="40" rx="11" fill="#E3E3E8" opacity="1"/>
+<text x="338" y="346" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="16" fill="#0064D8" text-anchor="middle" opacity="1" font-weight="700">🌙</text>
+<text x="306" y="338" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="12" fill="#6C6C73" text-anchor="end" opacity="1">العشاء</text>
+<text x="306" y="358" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="15" fill="#1C1C1E" text-anchor="end" opacity="1" font-weight="700">مطعم الجامعة المركزي</text>
+<rect x="246" y="324" width="60" height="24" rx="10" fill="#E4F5E9" opacity="1"/>
+<text x="276.0" y="341" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="12" fill="#17662B" text-anchor="middle" opacity="1" font-weight="700">محجوز</text>
+<text x="354" y="384" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="14" fill="#1C1C1E" text-anchor="end" opacity="1" font-weight="700">الأربعاء 22/11 · غدًا</text>
+<rect x="318" y="396" width="40" height="40" rx="11" fill="#E3E3E8" opacity="1"/>
+<text x="338" y="422" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="16" fill="#0064D8" text-anchor="middle" opacity="1" font-weight="700">☕</text>
+<text x="306" y="414" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="12" fill="#6C6C73" text-anchor="end" opacity="1">فطور الصباح</text>
+<text x="306" y="434" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="15" fill="#1C1C1E" text-anchor="end" opacity="1" font-weight="700">مطعم الجامعة المركزي</text>
+<rect x="214" y="400" width="92" height="24" rx="10" fill="#FFF6E2" opacity="1"/>
+<text x="260.0" y="417" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="12" fill="#875600" text-anchor="middle" opacity="1" font-weight="700">غير محجوز</text>
+<rect x="318" y="448" width="40" height="40" rx="11" fill="#E3E3E8" opacity="1"/>
+<text x="338" y="474" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="16" fill="#0064D8" text-anchor="middle" opacity="1" font-weight="700">🍲</text>
+<text x="306" y="466" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="12" fill="#6C6C73" text-anchor="end" opacity="1">الغداء</text>
+<text x="306" y="486" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="15" fill="#1C1C1E" text-anchor="end" opacity="1" font-weight="700">مطعم الإقامة</text>
+<rect x="214" y="452" width="92" height="24" rx="10" fill="#FFF6E2" opacity="1"/>
+<text x="260.0" y="469" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="12" fill="#875600" text-anchor="middle" opacity="1" font-weight="700">غير محجوز</text>
+<rect x="318" y="500" width="40" height="40" rx="11" fill="#E3E3E8" opacity="1"/>
+<text x="338" y="526" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="16" fill="#0064D8" text-anchor="middle" opacity="1" font-weight="700">🌙</text>
+<text x="306" y="518" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="12" fill="#6C6C73" text-anchor="end" opacity="1">العشاء</text>
+<text x="306" y="538" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="15" fill="#1C1C1E" text-anchor="end" opacity="1" font-weight="700">مطعم الجامعة المركزي</text>
+<rect x="214" y="504" width="92" height="24" rx="10" fill="#FFF6E2" opacity="1"/>
+<text x="260.0" y="521" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="12" fill="#875600" text-anchor="middle" opacity="1" font-weight="700">غير محجوز</text>
+<rect x="20" y="692" width="350" height="50" rx="12" fill="#0066DD" opacity="1"/>
+<text x="195.0" y="723.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="16" fill="#FFFFFF" text-anchor="middle" opacity="1" font-weight="700">تأكيد وحجز الناقص</text>
+<rect x="20" y="750" width="350" height="50" rx="12" fill="#FFFFFF" opacity="1" stroke="#AD362B" stroke-width="1"/>
+<text x="195.0" y="781.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="16" fill="#AD362B" text-anchor="middle" opacity="1" font-weight="700">استبدال الحجوزات المتعارضة</text>
+<rect x="20" y="808" width="350" height="50" rx="12" fill="#0066DD" opacity="1"/>
+<text x="195.0" y="839.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="16" fill="#FFFFFF" text-anchor="middle" opacity="1" font-weight="700">تفعيل وإنهاء الإعداد</text>
+<rect x="20" y="866" width="350" height="50" rx="12" fill="#FFFFFF" opacity="1" stroke="#C7C7CC" stroke-width="1"/>
+<text x="195.0" y="897.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="16" fill="#0064D8" text-anchor="middle" opacity="1">المتابعة دون أتمتة</text>
+<rect x="20" y="924" width="350" height="50" rx="12" fill="#FFFFFF" opacity="1" stroke="#C7C7CC" stroke-width="1"/>
+<text x="195.0" y="955.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', sans-serif" font-size="16" fill="#0064D8" text-anchor="middle" opacity="1">تحديث المعاينة</text></g></svg>
