@@ -16,7 +16,7 @@
  <string name="screen_13">"Restaurants pas encore choisis"</string>
  <string name="screen_15">"Aller à la configuration"</string>
  <string name="usual_restaurants">"Restaurants habituels"</string>
- <string name="screen_18">"Une exception se répète chaque semaine le jour choisi. Les jours sans exception utilisent les restaurants habituels."</string>
+ <string name="screen_18">"Une exception se répète chaque semaine le jour choisi. Les jours sans exception utilisent les restaurants habituels ; un repas sans restaurant est ignoré."</string>
  <string name="screen_19">"Dernière opération"</string>
  <string name="screen_20">"Détails"</string>
  <string name="screen_22">"Compte"</string>
@@ -45,7 +45,7 @@
  <string name="screen_48">"Se connecter et continuer"</string>
  <string name="screen_49">"Un restaurant par repas"</string>
  <string name="screen_50">"Seuls les restaurants qui proposent le repas pour votre compte sont affichés."</string>
- <string name="screen_51">"Choisir le restaurant"</string>
+ <string name="screen_51">"Pas de réservation pour ce repas"</string>
  <string name="screen_52">"Actualiser la liste des restaurants"</string>
  <string name="screen_54">"L’horaire est approximatif et dépend d’Internet et des restrictions d’Android."</string>
  <string name="screen_55">"Vérifier le plan"</string>
@@ -75,7 +75,7 @@
  <string name="say_1">". Appuyez pour masquer"</string>
  <string name="connect_1">"Saisissez le numéro d’inscription et le mot de passe."</string>
  <string name="connect_2">"Vérification du compte…"</string>
- <string name="connect_3">"Choisissez le restaurant de chaque repas, puis l’intervalle de vérification."</string>
+ <string name="connect_3">"Choisissez un restaurant pour au moins un repas, puis l’intervalle de vérification."</string>
  <string name="fill_meals_1">"Aucun restaurant disponible pour ce repas"</string>
  <string name="reload_restaurants_1">"Vérifiez d’abord le compte."</string>
  <string name="reload_restaurants_2">"Chargement des restaurants…"</string>
@@ -89,7 +89,7 @@
  <string name="render_plan_3">"À remplacer"</string>
  <string name="render_status_1">"Dernière confirmation complète des réservations des trois jours : "</string>
  <string name="render_status_6">"Les jours du dernier aperçu sont passés. Actualisez pour lire les réservations actuelles."</string>
- <string name="load_review_1">"Choisissez d’abord les trois restaurants."</string>
+ <string name="load_review_1">"Choisissez d’abord au moins un restaurant."</string>
  <string name="load_review_2">"Chargement du plan…"</string>
  <string name="load_review_3">"État de chaque repas tel qu’il apparaît maintenant dans Webetu · Vérification "</string>
  <string name="load_review_4">"Lecture seule ; aucune réservation n’est envoyée maintenant…"</string>
@@ -127,7 +127,7 @@
  <string name="details_2">"\nDernière confirmation complète : "</string>
  <string name="details_3">"Détails de l’opération"</string>
  <string name="common_done">"OK"</string>
- <string name="weekly_day_1">"Se répète chaque semaine selon la date du repas. Choisissez « Habituel » pour retirer l’exception. L’enregistrement arrête l’automatisation pour vérification et n’annule pas les réservations existantes."</string>
+ <string name="weekly_day_1">"Répète chaque semaine selon la date du repas. Choisissez un restaurant pour réserver un repas non configuré, ce jour-là uniquement, ou « Sauter ce repas » pour en suspendre un. Choisissez « Habituel » ou « Non choisie » pour retirer l’exception. L’enregistrement arrête l’automatisation pour vérification et n’annule pas les réservations existantes."</string>
  <string name="weekly_day_2">"Habituel — "</string>
  <string name="weekly_day_3">"enregistré"</string>
  <string name="weekly_day_4">"Indisponible — "</string>
@@ -140,7 +140,7 @@
  <string name="edit_appearance_3">"Sombre"</string>
  <string name="open_social_1">"Impossible d’ouvrir le lien. Vérifiez qu’un navigateur est installé."</string>
  <string name="privacy_1">"Les données du compte sont chiffrées et enregistrées sur votre téléphone. La connexion se fait uniquement avec les services MESRS et ONOU, sans serveur intermédiaire. Les liens de contact ne s’ouvrent que lorsque vous appuyez dessus et sont soumis à la politique du site externe.\n\nUtilisez l’automatisation si les conditions du service l’autorisent, et arrêtez-la en cas d’absence. Une vérification supplémentaire peut avoir lieu au changement de jour ou après un échec, et Android peut retarder l’exécution. Vérifiez les réservations dans Webetu."</string>
- <string name="about_1">"Application de suivi et de réservation des repas universitaires via Webetu, avec un restaurant par repas et une vérification automatique."</string>
+ <string name="about_1">"Application de suivi et de réservation des repas universitaires via Webetu, avec le restaurant de votre choix par repas et une vérification automatique."</string>
  <string name="about_2">"Application indépendante, non affiliée au ministère. La compatibilité avec toutes les universités n’a pas été testée sur le terrain."</string>
  <string name="about_3">"Wajabati · 0.12.0"</string>
  <string name="pending_1">"Aucune tentative en attente."</string>
@@ -170,8 +170,8 @@
  <string name="steps_title">"Étapes de configuration"</string>
  <string name="step1_title">"Saisir le numéro d’inscription et le mot de passe"</string>
  <string name="step1_desc">"Le compte est enregistré chiffré, uniquement sur votre téléphone."</string>
- <string name="step2_title">"Choisir un restaurant par repas"</string>
- <string name="step2_desc">"Petit-déjeuner, déjeuner, dîner — un restaurant pour chacun."</string>
+ <string name="step2_title">"Choisir au moins un restaurant"</string>
+ <string name="step2_desc">"Vous pouvez laisser un repas vide ; l’automatisation l’ignorera."</string>
  <string name="step3_title">"Voir et confirmer les réservations"</string>
  <string name="step3_desc">"Aperçu en lecture seule avant toute réservation."</string>
  <string name="step_done">"terminée"</string>
@@ -192,7 +192,7 @@
  <string name="set_not_set">"Pas encore défini"</string>
  <string name="set_pass_saved">"•••••••• · enregistré chiffré sur ce téléphone"</string>
  <string name="set_pass_none">"Non enregistré"</string>
- <string name="set_meals_heading">"Restaurants des trois repas"</string>
+ <string name="set_meals_heading">"Restaurants des repas"</string>
  <string name="set_week_none">"Aucune exception"</string>
  <string name="set_notify_heading">"Notifications"</string>
  <string name="set_notify_title">"Notifications de résultat"</string>
@@ -211,4 +211,6 @@
  <string-array name="meal_labels"><item>"Petit-déjeuner"</item><item>"Déjeuner"</item><item>"Dîner"</item></string-array>
  <string-array name="week_days"><item>"Lundi"</item><item>"Mardi"</item><item>"Mercredi"</item><item>"Jeudi"</item><item>"Vendredi"</item><item>"Samedi"</item><item>"Dimanche"</item></string-array>
  <string-array name="appearance_modes"><item>"Selon le système"</item><item>"Clair"</item><item>"Sombre"</item></string-array>
+ <string name="meal_unconfigured">"Non choisie"</string>
+ <string name="weekly_skip">"Sauter ce repas"</string>
 </resources>

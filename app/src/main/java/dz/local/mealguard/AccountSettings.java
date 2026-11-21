@@ -19,7 +19,8 @@ final class AccountSettings {
  static String journalKey(JSONObject c)throws Exception {
   byte[] hash=java.security.MessageDigest.getInstance("SHA-256").digest(c.getString("student").getBytes(java.nio.charset.StandardCharsets.UTF_8));StringBuilder s=new StringBuilder("journal_");for(byte b:hash)s.append(String.format(Locale.ROOT,"%02x",b&255));return s.toString();
  }
- static boolean configured(JSONObject c){for(int m=1;m<=3;m++)if(c.optLong(IDS[m])<=0)return false;return true;}
+ /** A setup is complete as soon as at least one meal is configured; empty meals are skipped everywhere. */
+ static boolean configured(JSONObject c){for(int m=1;m<=3;m++)if(c.optLong(IDS[m])>0)return true;return false;}
  static List<JSONObject> options(JSONArray depots,int meal)throws Exception{
   List<JSONObject> out=new ArrayList<>();Set<Long> ids=new HashSet<>();
   for(int i=0;i<depots.length();i++){
@@ -30,11 +31,14 @@ final class AccountSettings {
  }
  static JSONObject select(JSONObject source,JSONObject[] chosen)throws Exception{
   JSONObject c=new JSONObject(source.toString());
-  for(int m=1;m<=3;m++){
-   JSONObject d=chosen[m];if(d==null||d.optLong("id")<=0)throw new Engine.Problem("اختر مطعم "+Engine.LABEL[m]+".");
+  int picked=0;for(int m=1;m<=3;m++){
+   JSONObject d=chosen[m];
+   if(d==null){c.remove(IDS[m]);c.remove(NAMES[m]);continue;}
+   if(d.optLong("id")<=0)throw new Engine.Problem("اختر مطعم "+Engine.LABEL[m]+".");
    if(!Boolean.TRUE.equals(d.opt(OFFERS[m])))throw new Engine.Problem("المطعم لا يعرض "+Engine.LABEL[m]+".");
-   c.put(IDS[m],d.getLong("id")).put(NAMES[m],Engine.name(d));
-  }c.put("meal_schema",2);return c;
+   c.put(IDS[m],d.getLong("id")).put(NAMES[m],Engine.name(d));picked++;
+  }if(picked==0)throw new Engine.Problem("اختر مطعمًا واحدًا على الأقل لمتابعة الإعداد.");
+  c.put("meal_schema",2);return c;
  }
  static boolean sameChoices(JSONObject a,JSONObject b){for(int m=1;m<=3;m++)if(a.optLong(IDS[m])!=b.optLong(IDS[m]))return false;try{WeeklySchedule.rules(a);WeeklySchedule.rules(b);for(int day=1;day<=7;day++)for(int meal=1;meal<=3;meal++)if(WeeklySchedule.restaurant(a,day,meal)!=WeeklySchedule.restaurant(b,day,meal))return false;}catch(Exception e){return false;}return true;}
 }

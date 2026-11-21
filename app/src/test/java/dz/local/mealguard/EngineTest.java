@@ -78,8 +78,40 @@ public class EngineTest {
   depots.put(new JSONObject().put("id",30).put("nameAR","مطعم ثالث للاختبار").put("nameFR","Third").put("breakfast",false).put("lunch",false).put("dinner",true));cfg.put("dinner_id",30);
   for(int day=0;day<7;day++){List<Engine.Meal> p=Engine.plan(cfg,depots,new JSONArray(),Engine.today().plusDays(day));for(Engine.Meal m:p)assertEquals(m.type==1?10:m.type==2?20:30,m.depot.getLong("id"));}
  }
- @Test public void noDormFallbackWithoutThreeExplicitSelections()throws Exception{
-  JSONObject old=new JSONObject().put("dorm_id",10).put("lunch_id",20);assertThrows(Engine.Problem.class,()->Engine.plan(old,depots,new JSONArray(),Engine.today()));
+ @Test public void legacyPartialSelectionBooksOnlyExplicitMeals()throws Exception{
+  JSONObject old=new JSONObject().put("dorm_id",10).put("lunch_id",20);List<Engine.Meal> p=Engine.plan(old,depots,new JSONArray(),Engine.today());assertEquals(3,p.size());for(Engine.Meal m:p)assertEquals(2,m.type);
+ }
+ @Test public void optionalMealsPlanOnlyConfiguredOnes()throws Exception{
+  cfg.remove("breakfast_id");cfg.remove("dinner_id");List<Engine.Meal> p=plan();assertEquals(3,p.size());for(Engine.Meal m:p)assertEquals(2,m.type);
+ }
+ @Test public void weeklySkipOmitsOnlyThatDay()throws Exception{
+  LocalDate day=Engine.today().plusDays(1);
+  JSONObject slot=new JSONObject().put("skip",true);
+  JSONObject withSkip=WeeklySchedule.setDay(cfg,day.getDayOfWeek().getValue(),new JSONObject[]{null,null,slot,null},depots);
+  List<Engine.Meal> p=Engine.plan(withSkip,depots,new JSONArray(),Engine.today());
+  assertEquals(8,p.size());for(Engine.Meal m:p)assertFalse(m.type==2&&m.day.equals(day));
+  assertEquals(10,WeeklySchedule.restaurant(withSkip,day.getDayOfWeek().getValue(),1));// breakfast stays configured
+  assertEquals(-1,WeeklySchedule.restaurant(withSkip,day.getDayOfWeek().getValue(),2));// lunch skipped
+ }
+ @Test public void weeklyExceptionCanEnableUnconfiguredMealForThatDayOnly()throws Exception{
+  cfg.remove("dinner_id");
+  JSONObject depot=new JSONObject().put("id",30).put("nameFR","Third").put("dinner",true);depots.put(depot);
+  LocalDate day=Engine.today().plusDays(1);
+  JSONObject override=new JSONObject().put("id",30).put("name","Third");
+  JSONObject withRule=WeeklySchedule.setDay(cfg,day.getDayOfWeek().getValue(),new JSONObject[]{null,null,null,override},depots);
+  List<Engine.Meal> p=Engine.plan(withRule,depots,new JSONArray(),Engine.today());
+  int dinners=0;for(Engine.Meal m:p)if(m.type==3){dinners++;assertEquals(day,m.day);assertEquals(30,m.depot.getLong("id"));}
+  assertEquals(1,dinners);
+  List<Engine.Meal> base=Engine.plan(cfg,depots,new JSONArray(),Engine.today());for(Engine.Meal m:base)assertNotEquals(3,m.type);
+ }
+ @Test public void sameChoicesDetectsSkipDifference()throws Exception{
+  LocalDate day=Engine.today().plusDays(1);
+  JSONObject skipRule=WeeklySchedule.setDay(cfg,day.getDayOfWeek().getValue(),new JSONObject[]{null,null,new JSONObject().put("skip",true),null},depots);
+  assertFalse(AccountSettings.sameChoices(cfg,skipRule));
+  assertTrue(AccountSettings.sameChoices(cfg,new JSONObject(cfg.toString())));
+ }
+ @Test public void unconfiguredSetupIsRejectedByPlan()throws Exception{
+  assertThrows(Engine.Problem.class,()->Engine.plan(new JSONObject().put("student","x"),depots,new JSONArray(),Engine.today()));
  }
 
  @Test public void outOfWindowLocksAreExpired()throws Exception{

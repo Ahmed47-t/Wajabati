@@ -133,7 +133,7 @@ public class UxTest {
 
  @Test public void homeShowsSetupProgressAndThreeStepChecklist()throws Exception{Vault v=clean();try(ActivityController<MainActivity> c=Robolectric.buildActivity(MainActivity.class).setup()){MainActivity a=c.get();
   assertTrue(visible(root(a),"خطوات الإعداد"));assertTrue(visible(root(a),"اكتمال الإعداد 0/4"));assertTrue(visible(root(a),"0%"));
-  for(String step:new String[]{"إدخال رقم التسجيل وكلمة المرور","اختيار مطعم لكل وجبة","عرض الحجوزات وتأكيدها"})assertTrue(step,visible(root(a),step));
+  for(String step:new String[]{"إدخال رقم التسجيل وكلمة المرور","اختيار مطعم لوجبة واحدة على الأقل","عرض الحجوزات وتأكيدها"})assertTrue(step,visible(root(a),step));
   LinearLayout rows=(LinearLayout)get(a,"stepRows");List<View> steps=new ArrayList<>();for(int i=0;i<rows.getChildCount();i++)if(rows.getChildAt(i) instanceof LinearLayout)steps.add(rows.getChildAt(i));assertEquals(4,steps.size());assertTrue(visible(root(a),"السماح بالعمل في الخلفية (البطارية)"));
   for(View s:steps){assertTrue(s.getMinimumHeight()>0);assertNotNull(s.getContentDescription());}assertTrue(String.valueOf(steps.get(0).getContentDescription()).contains("الخطوة الحالية"));
   steps.get(1).performClick();idle();assertFalse("a later step cannot be opened before the account",visible(root(a),"1 من 4"));
@@ -152,7 +152,7 @@ public class UxTest {
  }finally{v.clear();}}
 
  @Test public void settingsRowsShowCurrentValuesAndNeverThePassword()throws Exception{Vault v=clean();try(ActivityController<MainActivity> c=Robolectric.buildActivity(MainActivity.class).setup()){MainActivity a=c.get();
-  find(root(a),"الإعدادات").performClick();idle();assertTrue("a",visible(root(a),"لم يُضبط بعد"));assertTrue("b",visible(root(a),"غير محفوظة"));assertTrue("c",visible(root(a),"مطاعم الوجبات الثلاث"));
+  find(root(a),"الإعدادات").performClick();idle();assertTrue("a",visible(root(a),"لم يُضبط بعد"));assertTrue("b",visible(root(a),"غير محفوظة"));assertTrue("c",visible(root(a),"مطاعم الوجبات"));
   Field cfg=MainActivity.class.getDeclaredField("cfg");cfg.setAccessible(true);cfg.set(a,sample());call(a,"update",new Class<?>[0]);
   assertTrue(visible(root(a),"20230001"));assertTrue(visible(root(a),"••••••••"));assertFalse(visible(root(a),"secret"));assertTrue(visible(root(a),"مطعم الغداء"));assertTrue(visible(root(a),"بلا استثناءات"));
   List<View> views=new ArrayList<>();all(root(a),views);boolean lunch=false;for(View x:views){assertFalse(String.valueOf(x.getContentDescription()).contains("secret"));if(x instanceof Button&&"الغداء".contentEquals(((Button)x).getText())&&String.valueOf(x.getContentDescription()).contains("مطعم الغداء"))lunch=true;}assertTrue(lunch);

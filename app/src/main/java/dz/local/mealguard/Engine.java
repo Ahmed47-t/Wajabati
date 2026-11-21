@@ -49,11 +49,12 @@ public final class Engine {
  }
  public static List<Meal> plan(JSONObject cfg,JSONArray depots,JSONArray rows,LocalDate today)throws Exception {
   Map<Long,JSONObject> offered=new HashMap<>();for(int i=0;i<depots.length();i++){JSONObject d=depots.getJSONObject(i);long id=d.getLong("id");if(offered.put(id,d)!=null)throw new Problem("معرّف مطعم مكرر؛ توقف آمن.");}
-  if(!AccountSettings.configured(cfg))throw new Problem("اختر مطعمًا لكل وجبة أولًا.");
+  if(!AccountSettings.configured(cfg))throw new Problem("اختر مطعمًا واحدًا على الأقل أولًا.");
   WeeklySchedule.rules(cfg);
   List<Meal> plan=new ArrayList<>();
   for(int ahead=1;ahead<=3;ahead++)for(int type=1;type<=3;type++){
-   JSONObject d=offered.get(WeeklySchedule.restaurant(cfg,today.plusDays(ahead),type));if(d==null)throw new Problem(today.plusDays(ahead)+" • "+LABEL[type]+": المطعم المختار أو مطعم الاستثناء غير متاح لحسابك الآن. لن نستخدم بديلًا تلقائيًا.");
+   long rid=WeeklySchedule.restaurant(cfg,today.plusDays(ahead),type);if(rid<=0)continue;// empty base and no exception, or the weekly exception asks to skip this meal today; a weekly exception may ADD a restaurant to a meal whose base is empty for one day only
+   JSONObject d=offered.get(rid);if(d==null)throw new Problem(today.plusDays(ahead)+" • "+LABEL[type]+": المطعم المختار أو مطعم الاستثناء غير متاح لحسابك الآن. لن نستخدم بديلًا تلقائيًا.");
    String field=type==1?"breakfast":type==2?"lunch":"dinner";
    if(!Boolean.TRUE.equals(d.opt(field)))throw new Problem("المطعم المختار لا يعرض "+LABEL[type]+". لن نغيّر المطعم تلقائيًا.");
    Meal m=new Meal(today.plusDays(ahead),type,d,0);plan.add(new Meal(m.day,type,d,matching(rows,m)));

@@ -16,7 +16,7 @@
  <string name="screen_13">"لم تُحدَّد المطاعم بعد"</string>
  <string name="screen_15">"اذهب إلى الإعداد"</string>
  <string name="usual_restaurants">"المطاعم المعتادة"</string>
- <string name="screen_18">"استثناء يتكرر كل أسبوع في اليوم المحدد. الأيام بلا استثناء تستعمل المطاعم المعتادة."</string>
+ <string name="screen_18">"استثناء يتكرر كل أسبوع في اليوم المحدد. الأيام بلا استثناء تستعمل المطاعم المعتادة؛ والوجبة دون مطعم تُتخطى."</string>
  <string name="screen_19">"آخر عملية"</string>
  <string name="screen_20">"التفاصيل"</string>
  <string name="screen_22">"الحساب"</string>
@@ -45,7 +45,7 @@
  <string name="screen_48">"تسجيل الدخول والمتابعة"</string>
  <string name="screen_49">"مطعم مستقل لكل وجبة"</string>
  <string name="screen_50">"تُعرض المطاعم التي تتيح الوجبة لحسابك فقط."</string>
- <string name="screen_51">"اختر المطعم"</string>
+ <string name="screen_51">"لا حجز لهذه الوجبة"</string>
  <string name="screen_52">"تحديث قائمة المطاعم"</string>
  <string name="screen_54">"الوقت تقريبي ويعتمد على الإنترنت وقيود أندرويد."</string>
  <string name="screen_55">"مراجعة الخطة"</string>
@@ -75,7 +75,7 @@
  <string name="say_1">". اضغط للإخفاء"</string>
  <string name="connect_1">"أدخل رقم التسجيل وكلمة المرور."</string>
  <string name="connect_2">"جارٍ التحقق من الحساب…"</string>
- <string name="connect_3">"اختر مطعم كل وجبة، ثم مدة التحقق."</string>
+ <string name="connect_3">"اختر مطعم وجبة واحدة على الأقل، ثم مدة التحقق."</string>
  <string name="fill_meals_1">"لا توجد مطاعم متاحة لهذه الوجبة"</string>
  <string name="reload_restaurants_1">"تحقّق من الحساب أولًا."</string>
  <string name="reload_restaurants_2">"جارٍ تحميل المطاعم…"</string>
@@ -89,7 +89,7 @@
  <string name="render_plan_3">"يحتاج استبدالًا"</string>
  <string name="render_status_1">"آخر تأكيد كامل لحجوزات الأيام الثلاثة: "</string>
  <string name="render_status_6">"انقضت أيام آخر معاينة. حدّث لقراءة الحجوزات الحالية."</string>
- <string name="load_review_1">"اختر المطاعم الثلاثة أولًا."</string>
+ <string name="load_review_1">"اختر مطعمًا واحدًا على الأقل أولًا."</string>
  <string name="load_review_2">"جارٍ تحميل الخطة…"</string>
  <string name="load_review_3">"حالة كل وجبة كما تظهر الآن في Webetu · التحقق "</string>
  <string name="load_review_4">"قراءة فقط؛ لا يُرسل حجز الآن…"</string>
@@ -127,7 +127,7 @@
  <string name="details_2">"\nآخر تأكيد كامل: "</string>
  <string name="details_3">"تفاصيل العملية"</string>
  <string name="common_done">"تم"</string>
- <string name="weekly_day_1">"يتكرر كل أسبوع حسب تاريخ الوجبة. اختر المعتاد لإزالة الاستثناء. الحفظ يوقف الأتمتة للمراجعة ولا يلغي الحجوزات الحالية."</string>
+ <string name="weekly_day_1">"يتكرر كل أسبوع حسب تاريخ الوجبة. يمكن اختيار مطعم هنا لحجز وجبة غير مُعدّة في الأساس لهذا اليوم فقط، أو تخطي وجبة مُعدّة. اختر المعتاد أو «غير مُختارة» لإزالة الاستثناء. الحفظ يوقف الأتمتة للمراجعة ولا يلغي الحجوزات الحالية."</string>
  <string name="weekly_day_2">"المعتاد — "</string>
  <string name="weekly_day_3">"المحفوظ"</string>
  <string name="weekly_day_4">"غير متاح — "</string>
@@ -140,7 +140,7 @@
  <string name="edit_appearance_3">"داكن"</string>
  <string name="open_social_1">"تعذّر فتح الرابط. تأكّد من وجود متصفح."</string>
  <string name="privacy_1">"بيانات الحساب مشفّرة ومحفوظة على هاتفك. الاتصال بخدمتي MESRS وONOU فقط، دون خادم وسيط. روابط التواصل لا تُفتح إلا عند الضغط عليها وتخضع لسياسة الموقع الخارجي.\n\nاستخدم الأتمتة إذا سمحت شروط الخدمة، وأوقفها عند الغياب. قد يحدث فحص إضافي عند تغير اليوم أو بعد فشل، وقد يؤخر أندرويد التنفيذ. راجع الحجوزات في Webetu."</string>
- <string name="about_1">"تطبيق لمتابعة وحجز الوجبات الجامعية عبر Webetu، مع اختيار مطعم لكل وجبة والتحقق التلقائي."</string>
+ <string name="about_1">"تطبيق لمتابعة وحجز الوجبات الجامعية عبر Webetu، مع اختيار مطعم لكل وجبة تريدها والتحقق التلقائي."</string>
  <string name="about_2">"تطبيق مستقل غير تابع للوزارة. التوافق مع كل الجامعات لم يُختبر ميدانيًا."</string>
  <string name="about_3">"وجباتي · 0.12.0"</string>
  <string name="pending_1">"لا توجد محاولات معلّقة."</string>
@@ -170,8 +170,8 @@
  <string name="steps_title">"خطوات الإعداد"</string>
  <string name="step1_title">"إدخال رقم التسجيل وكلمة المرور"</string>
  <string name="step1_desc">"يُحفظ الحساب مشفّرًا على هاتفك فقط."</string>
- <string name="step2_title">"اختيار مطعم لكل وجبة"</string>
- <string name="step2_desc">"فطور، غداء، عشاء — كل وجبة تختار مطعمها."</string>
+ <string name="step2_title">"اختيار مطعم لوجبة واحدة على الأقل"</string>
+ <string name="step2_desc">"يمكنك ترك أي وجبة فارغة؛ تتخطاها الأتمتة ولا تُطلب."</string>
  <string name="step3_title">"عرض الحجوزات وتأكيدها"</string>
  <string name="step3_desc">"معاينة للقراءة فقط قبل أي حجز."</string>
  <string name="step_done">"مكتملة"</string>
@@ -192,7 +192,7 @@
  <string name="set_not_set">"لم يُضبط بعد"</string>
  <string name="set_pass_saved">"•••••••• · محفوظة مشفّرة على هذا الهاتف"</string>
  <string name="set_pass_none">"غير محفوظة"</string>
- <string name="set_meals_heading">"مطاعم الوجبات الثلاث"</string>
+ <string name="set_meals_heading">"مطاعم الوجبات"</string>
  <string name="set_week_none">"بلا استثناءات"</string>
  <string name="set_notify_heading">"التنبيهات"</string>
  <string name="set_notify_title">"إشعارات نتيجة الحجز"</string>
@@ -211,4 +211,6 @@
  <string-array name="meal_labels"><item>"فطور الصباح"</item><item>"الغداء"</item><item>"العشاء"</item></string-array>
  <string-array name="week_days"><item>"الاثنين"</item><item>"الثلاثاء"</item><item>"الأربعاء"</item><item>"الخميس"</item><item>"الجمعة"</item><item>"السبت"</item><item>"الأحد"</item></string-array>
  <string-array name="appearance_modes"><item>"حسب النظام"</item><item>"فاتح"</item><item>"داكن"</item></string-array>
+ <string name="meal_unconfigured">"غير مُختارة"</string>
+ <string name="weekly_skip">"تخطي هذه الوجبة"</string>
 </resources>
