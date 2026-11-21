@@ -9,7 +9,7 @@
  <string name="screen_2">"Accueil"</string>
  <string name="screen_4">"Réglages"</string>
  <string name="screen_5">"Wajabati"</string>
- <string name="screen_6">"Réservation des repas universitaires"</string>
+ <string name="screen_6">"Réservation des repas universitaires · 0.13.1"</string>
  <string name="screen_9">"• Réserve dans Webetu vos repas universitaires manquants pour les trois prochains jours.\n• Aucune réservation n’est envoyée avant que vous ayez vérifié et approuvé le plan.\n• Vos données restent chiffrées sur votre téléphone et ne sont envoyées qu’aux services MESRS et ONOU."</string>
  <string name="screen_10">"Commencer la configuration"</string>
  <string name="auto_booking">"Réservation automatique"</string>
@@ -142,7 +142,7 @@
  <string name="privacy_1">"Les données du compte sont chiffrées et enregistrées sur votre téléphone. La connexion se fait uniquement avec les services MESRS et ONOU, sans serveur intermédiaire. Les liens de contact ne s’ouvrent que lorsque vous appuyez dessus et sont soumis à la politique du site externe.\n\nUtilisez l’automatisation si les conditions du service l’autorisent, et arrêtez-la en cas d’absence. Une vérification supplémentaire peut avoir lieu au changement de jour ou après un échec, et Android peut retarder l’exécution. Vérifiez les réservations dans Webetu."</string>
  <string name="about_1">"Application de suivi et de réservation des repas universitaires via Webetu, avec le restaurant de votre choix par repas et une vérification automatique."</string>
  <string name="about_2">"Application indépendante, non affiliée au ministère. La compatibilité avec toutes les universités n’a pas été testée sur le terrain."</string>
- <string name="about_3">"Wajabati · 0.14.0"</string>
+ <string name="about_3">"Wajabati 0.14.0"</string>
  <string name="pending_1">"Aucune tentative en attente."</string>
  <string name="pending_2">"\nVérifiez dans Webetu avant de retirer le verrou. Lors d’un remplacement, l’ancienne réservation a pu être annulée sans confirmation de la nouvelle. Le retrait ne récupère pas la réservation et ne garantit pas la nouvelle ; il peut permettre de répéter une demande existante. Ne l’utilisez pas pendant une panne du service."</string>
  <string name="pending_3">"J’ai vérifié — retirer le verrou"</string>
