@@ -60,8 +60,9 @@ public class BatteryStepTest {
    assertNotNull("the row asks the system for the exemption",asked);
    assertEquals(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,asked.getAction());
    assertEquals("package:"+a.getPackageName(),String.valueOf(asked.getData()));
-   assertEquals("and comes back to the same review step",2,(int)(Integer)get(a,"step"));
-   assertNull("returning does not ask the system twice",Shadows.shadowOf(a).getNextStartedActivity());
+   assertEquals("and leaves the review step exactly as it was",2,(int)(Integer)get(a,"step"));
+   assertNull("one tap is one prompt",Shadows.shadowOf(a).getNextStartedActivity());
+   assertTrue("the plan is still on screen",visible(root(a),"خطة الأيام الثلاثة"));
   }
  }
 
@@ -82,6 +83,7 @@ public class BatteryStepTest {
    android.content.Intent asked=Shadows.shadowOf(a).getNextStartedActivity();
    assertNotNull(asked);assertEquals(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,asked.getAction());
    assertTrue(visible(root(a),"اسمح بالعمل في الخلفية أولًا"));
+   assertNull("no second prompt in the same tap",Shadows.shadowOf(a).getNextStartedActivity());
   }
  }
 
@@ -105,13 +107,14 @@ public class BatteryStepTest {
   }
  }
 
- @Test public void theFourthChecklistRowOpensTheReviewStepWithTheBatterySetting()throws Exception{
+ @Test public void theFourthChecklistRowAsksForTheBatteryExemptionDirectly()throws Exception{
   try(ActivityController<MainActivity> c=Robolectric.buildActivity(MainActivity.class).setup()){MainActivity a=c.get();ready(a);
    LinearLayout steps=(LinearLayout)get(a,"stepRows");
    steps.getChildAt(3).performClick();idle();
-   assertEquals("the wizard opens on the review step",2,(int)(Integer)get(a,"step"));
-   assertTrue(visible(root(a),"خطة الأيام الثلاثة"));
-   assertTrue(visible(root(a),"استثناء التطبيق من توفير البطارية"));
+   android.content.Intent asked=Shadows.shadowOf(a).getNextStartedActivity();
+   assertNotNull("the checklist row goes straight to the system prompt",asked);
+   assertEquals(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,asked.getAction());
+   assertEquals("and never drags the user into another step",0,(int)(Integer)get(a,"mode"));
   }
  }
 
