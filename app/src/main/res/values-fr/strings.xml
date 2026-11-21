@@ -142,7 +142,7 @@
  <string name="privacy_1">"Les données du compte sont chiffrées et enregistrées sur votre téléphone. La connexion se fait uniquement avec les services MESRS et ONOU, sans serveur intermédiaire. Les liens de contact ne s’ouvrent que lorsque vous appuyez dessus et sont soumis à la politique du site externe.\n\nUtilisez l’automatisation si les conditions du service l’autorisent, et arrêtez-la en cas d’absence. Une vérification supplémentaire peut avoir lieu au changement de jour ou après un échec, et Android peut retarder l’exécution. Vérifiez les réservations dans Webetu."</string>
  <string name="about_1">"Application de suivi et de réservation des repas universitaires via Webetu, avec le restaurant de votre choix par repas et une vérification automatique."</string>
  <string name="about_2">"Application indépendante, non affiliée au ministère. La compatibilité avec toutes les universités n’a pas été testée sur le terrain."</string>
- <string name="about_3">"Wajabati · 0.12.0"</string>
+ <string name="about_3">"Wajabati · 0.14.0"</string>
  <string name="pending_1">"Aucune tentative en attente."</string>
  <string name="pending_2">"\nVérifiez dans Webetu avant de retirer le verrou. Lors d’un remplacement, l’ancienne réservation a pu être annulée sans confirmation de la nouvelle. Le retrait ne récupère pas la réservation et ne garantit pas la nouvelle ; il peut permettre de répéter une demande existante. Ne l’utilisez pas pendant une panne du service."</string>
  <string name="pending_3">"J’ai vérifié — retirer le verrou"</string>
@@ -207,6 +207,12 @@
  <string name="step4_title">"Autoriser le fonctionnement en arrière-plan (batterie)"</string>
  <string name="step4_desc">"Excluez Wajabati de l’économie de batterie pour que le système ne retarde pas la vérification."</string>
  <string name="battery_how">"Ouvrez « Batterie » dans la page de l’application, puis choisissez « Sans restriction »."</string>
+ <string name="battery_card_title">"Réglages batterie"</string>
+ <string name="battery_card_desc">"Pour que le système ne retarde ni n’arrête les vérifications en arrière-plan, excluez « وجباتي » de l’optimisation de la batterie (choisissez « Sans restriction »)."</string>
+ <string name="battery_open">"Ouvrir les réglages batterie"</string>
+ <string name="battery_ok">"✓ L’application est exclue de l’optimisation de la batterie"</string>
+ <string name="battery_not_ok">"Pas encore activé — appuyez et choisissez « Sans restriction »"</string>
+ <string name="battery_gate">"Terminez d’abord les réglages batterie : excluez l’application de l’optimisation (« Sans restriction »), puis réessayez."</string>
  <string name="enabled_now">"Réservation automatique activée. Vérification %1$s. Elle ne fonctionne pas téléphone éteint ou hors connexion ; désactivez-la en cas d’absence."</string>
  <string-array name="meal_labels"><item>"Petit-déjeuner"</item><item>"Déjeuner"</item><item>"Dîner"</item></string-array>
  <string-array name="week_days"><item>"Lundi"</item><item>"Mardi"</item><item>"Mercredi"</item><item>"Jeudi"</item><item>"Vendredi"</item><item>"Samedi"</item><item>"Dimanche"</item></string-array>

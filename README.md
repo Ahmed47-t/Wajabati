@@ -1,8 +1,21 @@
-# Wajabati 0.13.0 / وجباتي
+# Wajabati 0.14.0 / وجباتي
 
 Personal experimental Android meal-booking client. Not affiliated with MESRS or ONOU.
 
 **Not live-account tested.** Do not rely on it until the read-only login, preview, manually approved booking and official Webetu verification all pass. Use only if permitted by the service's terms. No CAPTCHA, MFA, access-control or reservation-window bypass is implemented. Manual cancellation/rebooking is available only with separate explicit approval and may lose the old reservation if rebooking fails.
+
+## 0.14.0 — battery-setup gate after booking
+
+- The confirmation area shown after a successful booking was replaced by a **battery setup card** inside the review step: why the exclusion matters, a live status line (excluded / not yet) and a direct Arabic button to the system battery-optimisation screen (choose «غير مقيّد» / unrestricted). The previous «تحديث المعاينة» / «المتابعة دون أتمتة» post-booking flow is gone.
+- **Activation is refused until the app is excluded from battery optimisation**: pressing «تفعيل وإنهاء الإعداد» first opens the battery prompt and shows a hint instead of enabling automation.
+- USER_GUIDE_AR documents the battery step; the About dialog now reads 0.14.0.
+- Validation: **228 passing local tests** (226 existing + the battery-gate/Swap test), lint 0 errors. Not verified on a physical device; this build is debug-signed with a **different** key than 0.13.1, so it cannot update an existing 0.13.1 install — uninstall first (app data is wiped).
+
+## 0.13.1 — optional meals and weekly exceptions
+
+- **Optional meals**: a meal can be left unconfigured instead of forcing all three.
+- **Weekly exceptions can enable a meal for one weekday only** («هذا اليوم فقط»), even a meal that is otherwise unconfigured; the exception recurs weekly and pausing automation keeps existing reservations untouched.
+- Validation: **226 passing local tests**, lint clean. Same debug certificate as 0.13.0 (versionCode 15), installs in place over 0.13.0.
 
 ## 0.13.0 — stuck-booking recovery and audit cleanups
 
