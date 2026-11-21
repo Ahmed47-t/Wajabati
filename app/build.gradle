@@ -1,9 +1,34 @@
 plugins { id 'com.android.application' }
+
+// Optional release signing. Without it the build keeps using the Android Debug certificate, exactly as 0.13.1.
+// To make 0.14.x install as an update over an existing copy, every build must use the SAME key:
+//   keystore.properties (never committed) =
+//     storeFile=wajabati-release.jks
+//     storePassword=...
+//     keyAlias=wajabati
+//     keyPassword=...
+def keystoreProps = new Properties()
+def keystoreFile = rootProject.file('keystore.properties')
+if (keystoreFile.exists()) {
+ keystoreFile.withInputStream { keystoreProps.load(it) }
+}
+def signed = keystoreFile.exists()
+
 android {
  namespace 'dz.local.mealguard'
  compileSdk 35
  defaultConfig { applicationId 'dz.local.mealguard'; minSdk 26; targetSdk 35; versionCode 16; versionName '0.14.0' }
- buildTypes { release { minifyEnabled false; signingConfig signingConfigs.debug } }
+ signingConfigs {
+  if (signed) {
+   release {
+    storeFile rootProject.file(keystoreProps['storeFile'])
+    storePassword keystoreProps['storePassword']
+    keyAlias keystoreProps['keyAlias']
+    keyPassword keystoreProps['keyPassword']
+   }
+  }
+ }
+ buildTypes { release { minifyEnabled false; signingConfig signed ? signingConfigs.release : signingConfigs.debug } }
  compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
  testOptions { unitTests.returnDefaultValues = true; unitTests.includeAndroidResources = true }
 }
