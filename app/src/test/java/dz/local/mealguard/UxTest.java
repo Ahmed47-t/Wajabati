@@ -166,7 +166,8 @@ public class UxTest {
   call(a,"lockUi",new Class<?>[]{boolean.class},false);assertFalse(visible(root(a),"جارٍ قراءة حجوزاتك"));assertEquals(0,((LinearLayout)get(a,"bookDays")).getChildCount());
  }finally{v.clear();}}
 
- @Test public void batteryIsTheFourthStepAndCompletedCardShowsOnlyOnce()throws Exception{Vault v=clean();try{v.accountVerified(true);v.success("ok");
+ /** 0.14.0: the fourth step is the battery exemption inside the review step, so the Home card only finishes once it is granted. */
+ @Test public void batteryIsTheFourthStepAndCompletedCardShowsOnlyOnce()throws Exception{Vault v=clean();try{Shadows.shadowOf(RuntimeEnvironment.getApplication().getSystemService(android.os.PowerManager.class)).setIgnoringBatteryOptimizations(RuntimeEnvironment.getApplication().getPackageName(),false);v.accountVerified(true);v.success("ok");
   try(ActivityController<MainActivity> c=Robolectric.buildActivity(MainActivity.class).setup()){MainActivity a=c.get();Field cfg=MainActivity.class.getDeclaredField("cfg");cfg.setAccessible(true);cfg.set(a,sample());call(a,"update",new Class<?>[0]);
    assertTrue(visible(root(a),"تبقّى إعداد البطارية"));assertTrue(visible(root(a),"75%"));assertTrue(visible(root(a),"اكتمال الإعداد 3/4"));assertNotNull(find(root(a),"التالي: إعداد البطارية"));assertFalse(v.setupSeen());
    find(root(a),"التالي: إعداد البطارية").performClick();idle();{android.content.Intent asked=Shadows.shadowOf(a).getNextStartedActivity();assertEquals(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,asked.getAction());assertEquals("package:"+a.getPackageName(),String.valueOf(asked.getData()));}

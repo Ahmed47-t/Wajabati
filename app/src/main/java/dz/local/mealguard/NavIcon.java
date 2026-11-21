@@ -3,7 +3,7 @@ import android.graphics.*;
 import android.graphics.drawable.Drawable;
 /** Original line icons for the bottom navigation, drawn on a 24-unit grid. No third-party assets. */
 final class NavIcon extends Drawable {
- static final int HOME=0,MEALS=1,SETTINGS=2,CALENDAR=3,USER=4,LOCK=5,CUP=6,BOWL=7,MOON=8,BELL=9,CLOCK=10,LOOK=11,GLOBE=12,INFO=13,EYE=14,CLOSE=15,EYE_OFF=16;
+ static final int HOME=0,MEALS=1,SETTINGS=2,CALENDAR=3,USER=4,LOCK=5,CUP=6,BOWL=7,MOON=8,BELL=9,CLOCK=10,LOOK=11,GLOBE=12,INFO=13,EYE=14,CLOSE=15,EYE_OFF=16,BATTERY=17;
  private final Paint p=new Paint(Paint.ANTI_ALIAS_FLAG);private final int kind,size;
  NavIcon(float density,int kind,int color){this.kind=kind;size=(int)(24*density);p.setColor(color);p.setStrokeCap(Paint.Cap.ROUND);p.setStrokeJoin(Paint.Join.ROUND);}
  void color(int c){p.setColor(c);invalidateSelf();}
@@ -25,6 +25,7 @@ final class NavIcon extends Drawable {
   else if(kind==INFO){c.drawCircle(12,12,8,p);c.drawLine(12,11.2f,12,16,p);p.setStyle(Paint.Style.FILL);c.drawCircle(12,8,1.2f,p);}
   else if(kind==EYE){a.moveTo(3,12);a.quadTo(12,4.5f,21,12);a.quadTo(12,19.5f,3,12);a.close();c.drawPath(a,p);c.drawCircle(12,12,2.7f,p);}
   else if(kind==EYE_OFF){a.moveTo(3,12);a.quadTo(12,4.5f,21,12);a.quadTo(12,19.5f,3,12);a.close();c.drawPath(a,p);c.drawCircle(12,12,2.7f,p);c.drawLine(5,4.5f,19,19.5f,p);}
+  else if(kind==BATTERY){c.drawRoundRect(3,7,18.5f,17,2.2f,2.2f,p);p.setStyle(Paint.Style.FILL);c.drawRoundRect(19.4f,10.2f,21,13.8f,1.2f,1.2f,p);p.setStyle(Paint.Style.STROKE);a.moveTo(10.9f,9.6f);a.lineTo(8.4f,12.9f);a.lineTo(11.6f,12.9f);a.lineTo(9.9f,15.4f);c.drawPath(a,p);}
   else if(kind==CLOSE){c.drawLine(6,6,18,18,p);c.drawLine(18,6,6,18,p);}
   else{for(int i=0;i<3;i++){float y=7+i*5;c.drawLine(4,y,20,y,p);}p.setStyle(Paint.Style.FILL);float[] x={9,15,8};for(int i=0;i<3;i++){c.drawCircle(x[i],7+i*5,2.4f,p);}}
   c.restore();

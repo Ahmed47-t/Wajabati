@@ -63,7 +63,7 @@ public class ServiceApi implements Replacement.Gateway {
   String raw=body==null?"":body.toString(); HttpsURLConnection c=null;
   try{
    c=(HttpsURLConnection)new URL(url.toString()).openConnection();c.setInstanceFollowRedirects(false);c.setConnectTimeout(15000);c.setReadTimeout(25000);c.setRequestMethod(method);c.setUseCaches(false);
-   c.setRequestProperty("User-Agent","MealGuard/0.13.1 Android");c.setRequestProperty("Accept","application/json");
+   c.setRequestProperty("User-Agent","MealGuard/0.14.0 Android");c.setRequestProperty("Accept","application/json");
    if(auth!=null)c.setRequestProperty("authorization",auth);
    if(sign){String ts=Long.toString(System.currentTimeMillis()/1000),nonce=UUID.randomUUID().toString();c.setRequestProperty("X-Timestamp",ts);c.setRequestProperty("X-Nonce",nonce);c.setRequestProperty("X-Signature",hmac(SIGNING,ts+"|"+nonce+"|"+raw));}
    if(body!=null){byte[] bytes=raw.getBytes(StandardCharsets.UTF_8);c.setRequestProperty("Content-Type","application/json; charset=utf-8");c.setDoOutput(true);c.setFixedLengthStreamingMode(bytes.length);try(OutputStream out=c.getOutputStream()){out.write(bytes);}}
