@@ -184,7 +184,7 @@ public final class MainActivity extends Activity {
  private void nextStep(){int next=Setup.next(setupDone(),batteryFree());if(next==Setup.BATTERY)battery();else if(next<Setup.BATTERY)openWizard(next);else openBookings();}
  private void update(){
   boolean conf=AccountSettings.configured(cfg),bat=batteryFree();int done=setupDone(),total=Setup.progress(done,bat),left=Setup.STEPS-total;boolean ready=done==3;boolean confirmed=vault.lastSuccess()>0&&Instant.ofEpochMilli(vault.lastSuccess()).atZone(Engine.ZONE).toLocalDate().equals(Engine.today());
-  if(total<4){if(vault.setupSeen())vault.setupSeen(false);heroGone=false;}else if(!heroGone&&mode==0&&!vault.setupSeen())vault.setupSeen(true);
+  if(total<Setup.STEPS){if(vault.setupSeen())vault.setupSeen(false);heroGone=false;}else if(!heroGone&&mode==0&&!vault.setupSeen())vault.setupSeen(true);
   hero.setVisibility(total==Setup.STEPS&&heroGone?View.GONE:View.VISIBLE);
   heroChip.setText(getString(left==0?R.string.hero_chip_done:left==1?R.string.hero_chip_one:left==2?R.string.hero_chip_two:left==3?R.string.hero_chip_three:R.string.hero_chip_start));heroTitle.setText(getString(total==Setup.STEPS?R.string.hero_title_3:done>=3?R.string.hero_title_bat:done==2?R.string.hero_title_2:done==1?R.string.hero_title_1:R.string.hero_title_0));heroSub.setText(getString(R.string.hero_sub,every(vault.intervalMinutes())));heroBar.setProgress(total);heroCount.setText(total*25+"% · "+getString(R.string.hero_progress,total));
   setupAction.setText(getString(total==Setup.STEPS?R.string.hero_next_3:done>=3?R.string.hero_next_bat:done==2?R.string.hero_next_2:done==1?R.string.hero_next_1:R.string.screen_10));
@@ -193,10 +193,10 @@ public final class MainActivity extends Activity {
   value(intervalRow,every(vault.intervalMinutes()));value(studentRow,cfg.optString("student").isEmpty()?getString(R.string.set_not_set):cfg.optString("student"));value(passRow,getString(cfg.optString("password").isEmpty()?R.string.set_pass_none:R.string.set_pass_saved));for(int m=1;m<=3;m++)value(mealRow[m],cfg.optString(AccountSettings.NAMES[m],getString(R.string.render_meals_1)));
   StringBuilder days=new StringBuilder();try{JSONObject rules=WeeklySchedule.rules(cfg);for(int d=1;d<=7;d++){JSONObject r=rules.optJSONObject(Integer.toString(d));if(r!=null&&r.length()>0){if(days.length()>0)days.append(getString(R.string.value_1));days.append(dayName(d));}}}catch(Exception ignored){}value(weekRow,days.length()==0?getString(R.string.set_week_none):days.toString());
   value(notifyRow,getString(notifications()?R.string.set_notify_on:R.string.set_notify_off));
-  if(batteryNote!=null)value(batteryNote,getString(bat?R.string.step_done:R.string.battery_pending));
+  if(batteryNote!=null)value(batteryNote,getString(bat?R.string.battery_done:R.string.battery_pending));
   renderMeals();renderToday(planCache());renderBookings();lastDetail=vault.status();status.setText(concise(lastDetail));
  }
- /** The three setup steps with their state; a step opens only when the previous one is done. */
+ /** The four setup steps with their state; a step opens only when the previous one is done. The last one is the battery. */
  private void renderSteps(int done){
   if(stepRows==null)return;stepRows.removeAllViews();boolean bat=batteryFree();int[] titles={R.string.step1_title,R.string.step2_title,R.string.step3_title,R.string.step4_title},descs={R.string.step1_desc,R.string.step2_desc,R.string.step3_desc,R.string.step4_desc};
   for(int i=0;i<Setup.STEPS;i++){final int index=i;boolean finished=i<3?i<done:bat,current=!finished&&i==Math.min(done,3);if(i>0)divider(stepRows,42);

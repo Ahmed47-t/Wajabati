@@ -72,7 +72,7 @@ public class BatteryStepTest {
    View activate=(View)get(a,"activateButton");
    assertFalse("the exemption is still missing",activate.isShown());assertTrue("a same-day confirmation is what unlocks activation",visible(root(a),"المتابعة دون أتمتة"));
    batteryFree(a,true);call(a,"update",new Class<?>[0]);
-   assertTrue(activate.isShown());assertEquals("تفعيل الحجز التلقائي",((Button)activate).getText().toString());
+   assertTrue(activate.isShown());assertEquals(a.getString(R.string.screen_59),((Button)activate).getText().toString());
   }
  }
 
