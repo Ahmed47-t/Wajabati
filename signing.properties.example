@@ -1,0 +1,10 @@
+# Copy to signing.properties (untracked, gitignored) and fill in real values.
+# The permanent release keystore lives OUTSIDE this repository:
+#   /home/user/signing/wajabati-release.jks   (alias: wajabati)
+# Releases must keep the same applicationId (dz.local.mealguard), the same keystore
+# and a strictly increasing versionCode, otherwise the APK cannot update over the
+# installed app.
+storeFile=/home/user/signing/wajabati-release.jks
+storePassword=CHANGE_ME
+keyAlias=wajabati
+keyPassword=CHANGE_ME

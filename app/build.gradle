@@ -1,9 +1,32 @@
 plugins { id 'com.android.application' }
 android {
+ def signingFile = rootProject.file('signing.properties')
+ def signingProps = new Properties()
+ if (signingFile.exists()) signingProps.load(new FileInputStream(signingFile))
  namespace 'dz.local.mealguard'
  compileSdk 35
  defaultConfig { applicationId 'dz.local.mealguard'; minSdk 26; targetSdk 35; versionCode 16; versionName '0.14.0' }
- buildTypes { release { minifyEnabled false; signingConfig signingConfigs.debug } }
+ signingConfigs {
+  release {
+   if (signingFile.exists()) {
+    storeFile file(signingProps.storeFile)
+    storePassword signingProps.storePassword
+    keyAlias signingProps.keyAlias
+    keyPassword signingProps.keyPassword
+   }
+  }
+ }
+ buildTypes {
+  release {
+   minifyEnabled false
+   if (signingFile.exists()) {
+    signingConfig signingConfigs.release
+   } else {
+    println 'WARNING: signing.properties not found - release APK will use the debug key and cannot update existing installs. Copy signing.properties.example to signing.properties and fill it.'
+    signingConfig signingConfigs.debug
+   }
+  }
+ }
  compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
  testOptions { unitTests.returnDefaultValues = true; unitTests.includeAndroidResources = true }
 }
