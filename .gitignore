@@ -4,3 +4,6 @@ app/build/
 local.properties
 *.jks
 *.keystore
+
+# Release signing secrets (see signing.properties.example)
+signing.properties
